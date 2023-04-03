@@ -1,0 +1,13 @@
+#Create MySQL Image for JSP Tutorial Application
+FROM mysql:latest
+
+
+RUN chown -R mysql:root /var/lib/mysql/
+
+
+
+ENV MYSQL_DATABASE=networkapp
+ENV MYSQL_ROOT_PASSWORD=root
+
+
+EXPOSE 3306
