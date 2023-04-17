@@ -3,9 +3,7 @@ package spring.summer.socialnetwork.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.summer.socialnetwork.dto.GroupDTO;
-import spring.summer.socialnetwork.dto.MessageDto;
 import spring.summer.socialnetwork.models.Group;
-import spring.summer.socialnetwork.models.Message;
 import spring.summer.socialnetwork.repositories.GroupRepository;
 
 import java.util.List;
