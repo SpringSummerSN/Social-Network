@@ -1,0 +1,10 @@
+FROM maven:3.8.3-eclipse-temurin-17
+#VOLUME /tmp
+#COPY target/*.jar app.jar
+COPY . .
+RUN mvn clean install
+
+COPY init.sql /docker-entrypoint-initdb.d/
+
+
+ENTRYPOINT ["mvn","spring-boot:run"]
