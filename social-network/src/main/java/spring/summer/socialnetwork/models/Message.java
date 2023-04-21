@@ -9,6 +9,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.datetime.DateTimeFormatAnnotationFormatterFactory;
+
+import java.time.LocalDateTime;
+import java.util.function.ToDoubleBiFunction;
 
 @Entity
 @Data
@@ -25,5 +29,9 @@ public class Message {
     private User sender;
 
     private String message;
+
+    //TODO
+    //update dokumentacji po dodaniu pola datetime
+    private LocalDateTime addedTime;
 
 }
