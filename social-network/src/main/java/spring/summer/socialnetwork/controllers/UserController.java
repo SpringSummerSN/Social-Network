@@ -2,6 +2,7 @@ package spring.summer.socialnetwork.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.summer.socialnetwork.dto.UserDTO;
@@ -23,7 +24,9 @@ public class UserController {
 
     // ADD USER
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<User> add(@RequestBody UserDTO userDTO) {
+        System.out.println(userDTO);
         return userService.saveUser(userDTO);
     }
 
@@ -31,6 +34,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") String id) {
         return userService.deleteUser(id);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserByID(@PathVariable("id") String id) {
+        return userService.getUserById(id);
     }
 
     // GET ALL USERS
@@ -41,7 +48,7 @@ public class UserController {
 
     // UPDATE USER BY ID
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") String id, UserDTO userDTO) {
-        userService.updateUser(id, userDTO);
+    public ResponseEntity<User> update(@PathVariable("id") String id, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(id, userDTO);
     }
 }

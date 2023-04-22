@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping("api/v1/group")
 public class GroupController
 {
-    private final GroupService groupService;
+    private  GroupService groupService;
 
     @Autowired
     public GroupController(GroupService groupService) {
@@ -31,13 +31,11 @@ public class GroupController
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGroupById(@PathVariable Long id) {
         groupService.deleteGroupById(id);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public void addGroup(@RequestBody GroupDTO groupDTO) {
         groupService.addGroup(groupDTO);
     }

@@ -26,21 +26,30 @@ public class UserService {
 
     @Transactional
     public ResponseEntity<User> saveUser(UserDTO userDTO) {
-        var user = User.builder().name(userDTO.getName()).surname(userDTO.getSurname()).email(userDTO.getEmail()).password(passwordEncoder.encode(userDTO.getPassword())).build();
+        User user = null;
+        try {
+            user = User.builder().
+                    name(userDTO.getName())
+                    .surname(userDTO.getSurname())
+                    .email(userDTO.getEmail())
+                    .password(passwordEncoder.encode(userDTO.getPassword())).build();
 
-        userRepository.save(user);
+            userRepository.save(user);
+        }catch (Exception e){
+            System.out.println("Nie udało się utworzyć useera");
+        }
 
-        return ResponseEntity.ok(user);
+        return ResponseEntity.status(201).body(user);
 
     }
 
     @Transactional
     public ResponseEntity deleteUser(String id) {
         if (userRepository.findById(Long.parseLong(id)).equals(Optional.empty()))
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         else {
             userRepository.deleteById(Long.parseLong(id));
-            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
     }
 
@@ -50,21 +59,30 @@ public class UserService {
 
     public ResponseEntity<User> getUserById(String id) {
         if (userRepository.findById(Long.parseLong(id)).equals(Optional.empty()))
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         else {
             var user = userRepository.findById(Long.parseLong(id)).get();
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(user);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
         }
     }
 
     @Transactional
-    public void updateUser(String id, UserDTO userDTO) {
-        var user = userRepository.findById(Long.parseLong(id)).get();
-        user.setEmail(userDTO.getEmail());
-        user.setName(userDTO.getName());
-        user.setSurname(userDTO.getSurname());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+    public ResponseEntity<User> updateUser(String id, UserDTO userDTO) {
 
-        userRepository.save(user);
+        if (userRepository.findById(Long.parseLong(id)).equals(Optional.empty())) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        else {
+            var user = userRepository.findById(Long.parseLong(id)).get();
+            user.setEmail(userDTO.getEmail());
+            user.setName(userDTO.getName());
+            user.setSurname(userDTO.getSurname());
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
+            userRepository.save(user);
+            return ResponseEntity.status(HttpStatus.OK).body(user);
+        }
+
+
     }
 }
