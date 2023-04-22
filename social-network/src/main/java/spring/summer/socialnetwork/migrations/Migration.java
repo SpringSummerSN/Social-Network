@@ -10,6 +10,7 @@ import spring.summer.socialnetwork.repositories.UserRepository;
 import spring.summer.socialnetwork.services.UserService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,7 +28,7 @@ public class Migration {
 
     @Transactional
     public void create_admin_user(){
-        var user = userRepository.findByEmail("admin@gmail.com");
+        var user=  userRepository.findByEmail("admin@gmail.com");
 
         if(user == null){
            var new_user = User.builder()

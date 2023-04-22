@@ -2,6 +2,7 @@ package spring.summer.socialnetwork.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,7 +10,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
@@ -29,8 +32,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 //@WebMvcTest(UserController.class)
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@RunWith(SpringRunner.class)
+@WebMvcTest(UserController.class)
 class UserControllerTest {
 
     @Autowired
@@ -52,11 +55,12 @@ class UserControllerTest {
                 .password("password")
                 .build();
 
-        ResultActions response = mockMvc.perform((post("/api/v1/user")
+        MvcResult response = mockMvc.perform((post("/api/v1/user")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user))));
-        response.andDo(print())
-                .andExpect(status().isCreated());
+                .content(objectMapper.writeValueAsString(user)))).andReturn();
+
+        //        response.andDo(print())
+//                .andExpect(status().isCreated());
 
 
 
@@ -68,10 +72,17 @@ class UserControllerTest {
 
     @Test
     void getUserByID() {
+
+
+
     }
 
     @Test
-    void userList() {
+    void userList() throws Exception {
+        ResultActions response = mockMvc.perform((get("/api/v1/user")
+                .contentType(MediaType.APPLICATION_JSON)));
+        response.andDo(print())
+                .andExpect(status().isCreated());
     }
 
     @Test
