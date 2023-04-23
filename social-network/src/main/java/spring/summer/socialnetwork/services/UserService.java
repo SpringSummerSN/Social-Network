@@ -24,24 +24,7 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Transactional
-    public ResponseEntity<User> saveUser(UserDTO userDTO) {
-        User user = null;
-        try {
-            user = User.builder().
-                    name(userDTO.getName())
-                    .surname(userDTO.getSurname())
-                    .email(userDTO.getEmail())
-                    .password(passwordEncoder.encode(userDTO.getPassword())).build();
 
-            userRepository.save(user);
-        }catch (Exception e){
-            System.out.println("Nie udało się utworzyć useera");
-        }
-
-        return ResponseEntity.status(201).body(user);
-
-    }
 
     @Transactional
     public ResponseEntity deleteUser(String id) {

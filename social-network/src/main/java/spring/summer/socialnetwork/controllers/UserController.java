@@ -4,9 +4,11 @@ package spring.summer.socialnetwork.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
+import spring.summer.socialnetwork.repositories.UserRepository;
 import spring.summer.socialnetwork.services.UserService;
 
 import java.util.List;
@@ -17,18 +19,16 @@ public class UserController {
 
     private UserService userService;
 
+
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+
     }
 
     // ADD USER
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> add(@RequestBody UserDTO userDTO) {
-        System.out.println(userDTO);
-        return userService.saveUser(userDTO);
-    }
+
 
     // DELETE USER BY ID
     @DeleteMapping("/{id}")

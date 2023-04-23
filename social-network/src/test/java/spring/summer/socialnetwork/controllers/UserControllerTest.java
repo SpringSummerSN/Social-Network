@@ -9,13 +9,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
+import spring.summer.socialnetwork.config.SecurityConfig;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
+import spring.summer.socialnetwork.repositories.UserRepository;
 import spring.summer.socialnetwork.services.UserService;
 
 import java.util.ArrayList;
@@ -32,10 +37,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 //@WebMvcTest(UserController.class)
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(UserController.class)
+//@SpringBootTest
+@WebMvcTest(controllers = {UserController.class})
+@AutoConfigureMockMvc
+@Import(SecurityConfig.class)
 class UserControllerTest {
 
+    @Autowired
+    public UserRepository userRepository;
+
+    @Autowired
+    public PasswordEncoder passwordEncoder;
     @Autowired
     private MockMvc mockMvc;
 
@@ -55,12 +67,11 @@ class UserControllerTest {
                 .password("password")
                 .build();
 
-        MvcResult response = mockMvc.perform((post("/api/v1/user")
+        ResultActions response = mockMvc.perform((post("/api/v1/user")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user)))).andReturn();
-
-        //        response.andDo(print())
-//                .andExpect(status().isCreated());
+                .content(objectMapper.writeValueAsString(user))));
+                response.andDo(print())
+                .andExpect(status().isCreated());
 
 
 
