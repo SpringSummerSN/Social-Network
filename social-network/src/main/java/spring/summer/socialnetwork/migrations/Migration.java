@@ -10,6 +10,8 @@ import spring.summer.socialnetwork.repositories.UserRepository;
 import spring.summer.socialnetwork.services.UserService;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class Migration {
@@ -26,12 +28,18 @@ public class Migration {
 
     @Transactional
     public void create_admin_user(){
-        var user = User.builder()
-                .email("admin@gmail.com")
-                .password("admin")
-                .roles(Arrays.asList(new Role[]{new Role("ADMIN")}))
-                .build();
-        userRepository.save(user);
+        var user=  userRepository.findByEmail("admin@gmail.com");
+
+        if(user == null){
+           var new_user = User.builder()
+                    .email("admin@gmail.com")
+                    .password("admin")
+                    .roles(Arrays.asList(new Role[]{new Role("ADMIN")}))
+                    .build();
+            userRepository.save(new_user);
+        }
+
+
 
     }
 

@@ -24,6 +24,7 @@ public class Group {
 
     private String description;
 
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "group_users",

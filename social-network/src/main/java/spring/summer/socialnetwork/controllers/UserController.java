@@ -2,10 +2,13 @@ package spring.summer.socialnetwork.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
+import spring.summer.socialnetwork.repositories.UserRepository;
 import spring.summer.socialnetwork.services.UserService;
 
 import java.util.List;
@@ -16,21 +19,25 @@ public class UserController {
 
     private UserService userService;
 
+
+
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+
     }
 
     // ADD USER
-    @PostMapping
-    public ResponseEntity<User> add(@RequestBody UserDTO userDTO) {
-        return userService.saveUser(userDTO);
-    }
+
 
     // DELETE USER BY ID
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable("id") String id) {
         return userService.deleteUser(id);
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserByID(@PathVariable("id") String id) {
+        return userService.getUserById(id);
     }
 
     // GET ALL USERS
@@ -41,7 +48,7 @@ public class UserController {
 
     // UPDATE USER BY ID
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") String id, UserDTO userDTO) {
-        userService.updateUser(id, userDTO);
+    public ResponseEntity<User> update(@PathVariable("id") String id, @RequestBody UserDTO userDTO) {
+        return userService.updateUser(id, userDTO);
     }
 }
