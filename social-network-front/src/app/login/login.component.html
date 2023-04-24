@@ -8,13 +8,13 @@
       novalidate
     >
       <div class="form-group">
-        <label for="username">Username</label>
+        <label for="email">Email</label>
         <input
           type="text"
           class="form-control"
-          name="username"
-          [(ngModel)]="form.username"
-          requiredś
+          name="email"
+          [(ngModel)]="form.email"
+          required
           #username="ngModel"
           [ngClass]="{ 'is-invalid': f.submitted && username.errors }"
         />
