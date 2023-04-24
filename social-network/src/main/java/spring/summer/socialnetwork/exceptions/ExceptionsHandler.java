@@ -14,4 +14,11 @@ public class ExceptionsHandler {
         return "Invalida data";
     }
 
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleRunTimeException(){
+        return "Bad Request";
+    }
+
+
 }

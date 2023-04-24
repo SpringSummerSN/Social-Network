@@ -1,6 +1,8 @@
 package spring.summer.socialnetwork.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Title cannot be empty")
+    @Size(min=1, max=255)
     private String title;
 
     private String description;
