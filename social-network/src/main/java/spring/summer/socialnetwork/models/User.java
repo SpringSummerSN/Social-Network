@@ -3,12 +3,14 @@ package spring.summer.socialnetwork.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import spring.summer.socialnetwork.validator.ValidPassword;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,11 +37,15 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min=2, max=150)
     private String name;
-
+    @NotEmpty(message = "Surname cannot be empty")
+    @Size(min=2, max=150)
     private String surname;
 
     @Column(nullable = false, name = "password")
+    @ValidPassword
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -103,5 +109,15 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+
+                '}';
     }
 }

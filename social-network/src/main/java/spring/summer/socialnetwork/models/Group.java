@@ -1,6 +1,8 @@
 package spring.summer.socialnetwork.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,9 +22,12 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @NotEmpty(message = "Group-name cannot be empty")
+    @Size(min=2, max=255)
     private String name;
 
     private String description;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
