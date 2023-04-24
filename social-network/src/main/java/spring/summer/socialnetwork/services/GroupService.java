@@ -5,10 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.summer.socialnetwork.dto.GroupDTO;
 import spring.summer.socialnetwork.models.Group;
-<<<<<<< HEAD
-=======
 import spring.summer.socialnetwork.models.User;
->>>>>>> test_branch
+
 import spring.summer.socialnetwork.repositories.GroupRepository;
 import spring.summer.socialnetwork.repositories.UserRepository;
 
