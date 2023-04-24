@@ -28,12 +28,13 @@ public class Migration {
 
     @Transactional
     public void create_admin_user(){
-        var user=  userRepository.findByEmail("admin@gmail.com");
 
-        if(user == null){
+        if(!userRepository.existsByEmail("admin@gmail.com")){
            var new_user = User.builder()
                     .email("admin@gmail.com")
-                    .password("admin")
+                    .password("Admin123*")
+                   .name("admin")
+                   .surname("admin")
                     .roles(Arrays.asList(new Role[]{new Role("ADMIN")}))
                     .build();
             userRepository.save(new_user);

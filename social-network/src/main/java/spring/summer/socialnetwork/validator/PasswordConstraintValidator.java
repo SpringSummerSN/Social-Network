@@ -15,28 +15,7 @@ import java.util.stream.Collectors;
 
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
-    private DictionaryRule dictionaryRule;
 
-    @Override
-    public void initialize(ValidPassword constraintAnnotation) {
-        try {
-            String invalidPasswordList = this.getClass().getResource("/invalid-password-list.txt").getFile();
-            dictionaryRule = new DictionaryRule(
-                    new WordListDictionary(WordLists.createFromReader(
-                            // Reader around the word list file
-                            new FileReader[] {
-                                    new FileReader(invalidPasswordList)
-                            },
-                            // True for case sensitivity, false otherwise
-                            false,
-                            // Dictionaries must be sorted
-                            new ArraysSort()
-                    )));
-        } catch (IOException e) {
-            System.out.println("GITARA DZIALA");
-//            throw new RuntimeException("could not load word list", e);
-        }
-    }
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
@@ -58,10 +37,10 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
                 new CharacterRule(EnglishCharacterData.Special, 1),
 
                 // no whitespace
-                new WhitespaceRule(),
+                new WhitespaceRule()
 
                 // no common passwords
-                dictionaryRule
+
         ));
 
         RuleResult result = validator.validate(new PasswordData(password));
