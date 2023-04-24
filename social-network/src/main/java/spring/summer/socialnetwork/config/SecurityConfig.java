@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 import spring.summer.socialnetwork.jwt.JwtFilter;
 
 
@@ -14,9 +15,13 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
 
+    private final CorsFilter corsFilter;
+
+
     @Autowired
-    public SecurityConfig(JwtFilter jwtFilter) {
+    public SecurityConfig(JwtFilter jwtFilter, CorsFilter corsFilter) {
         this.jwtFilter = jwtFilter;
+        this.corsFilter = corsFilter;
     }
 
     @Bean
@@ -28,7 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/**")
                 .permitAll()
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
