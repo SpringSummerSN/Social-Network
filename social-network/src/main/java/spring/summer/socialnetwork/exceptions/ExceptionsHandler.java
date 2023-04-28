@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionsHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleConstraintViolationException(){
+    public String handleConstraintViolationException(ConstraintViolationException exception){
+        System.out.println(exception.getMessage());
+
         return "Invalida data";
     }
 
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleRunTimeException(){
+    public String handleRunTimeException(RuntimeException exception){
+        System.out.println(exception.getMessage());
         return "Bad Request";
     }
 

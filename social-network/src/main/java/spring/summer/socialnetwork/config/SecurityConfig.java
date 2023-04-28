@@ -30,10 +30,14 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/login", "/api/v1/register")
                 .requestMatchers("/**")
                 .permitAll()
+//                .requestMatchers("/api/v1/**")
+//                .authenticated()
                 .and()
-                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(corsFilter, JwtFilter.class);
         return http.build();
     }
 }

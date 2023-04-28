@@ -29,7 +29,7 @@ public class Group {
     private String description;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "group_users",
             joinColumns = @JoinColumn(name = "group_id"),
