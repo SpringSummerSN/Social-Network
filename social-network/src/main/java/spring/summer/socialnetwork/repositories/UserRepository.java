@@ -9,9 +9,14 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
-    public List<User> findAll();
+     List<User> findAll();
 
-    public Optional<User> findByEmail(String email);
+     Optional<User> findByEmail(String email);
 
-    public boolean existsByEmail(String email);
+     boolean existsByEmail(String email);
+
+     List<User> findFirst10ByOrderByIdAsc();
+
+
+
 }

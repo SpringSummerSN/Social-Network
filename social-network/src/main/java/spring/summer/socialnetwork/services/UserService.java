@@ -2,12 +2,10 @@ package spring.summer.socialnetwork.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import spring.summer.socialnetwork.controllers.UserController;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.UserRepository;
@@ -49,7 +47,7 @@ public class UserService {
         else {
 
             var user = userRepository.findById(Long.parseLong(id)).get();
-            user.add(linkTo(methodOn(UserController.class).userList()).withSelfRel());
+
             return ResponseEntity.status(HttpStatus.OK).body(user);
         }
     }

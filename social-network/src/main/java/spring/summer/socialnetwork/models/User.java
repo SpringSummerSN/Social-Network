@@ -48,6 +48,8 @@ public class User extends RepresentationModel<User> implements UserDetails {
     @ValidPassword
     private String password;
 
+    private boolean enabled;
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_roles",
@@ -73,7 +75,12 @@ public class User extends RepresentationModel<User> implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "user_2_id")
     )
     private List<User> friends;
-//////Czekamy na lepsze pomysły ze znajomomymi :D
+
+
+    public void add_invitation(User user){
+        invitations.add(user);
+    }
+
 
 
     @Override
@@ -120,4 +127,9 @@ public class User extends RepresentationModel<User> implements UserDetails {
 
                 '}';
     }
+
+
+
+
 }
+

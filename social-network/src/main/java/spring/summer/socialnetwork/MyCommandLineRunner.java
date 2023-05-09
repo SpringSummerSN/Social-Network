@@ -9,12 +9,12 @@ import spring.summer.socialnetwork.migrations.Migration;
 public class MyCommandLineRunner implements CommandLineRunner {
 
     private final Migration migration;
-    private final Mockup mockup;
+//    private final Mockup mockup;
 
     @Autowired
-    public MyCommandLineRunner(Migration migration, Mockup mockup) {
+    public MyCommandLineRunner(Migration migration) {
         this.migration = migration;
-        this.mockup = mockup;
+//        this.mockup = mockup;
     }
 
     @Override
