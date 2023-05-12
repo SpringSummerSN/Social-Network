@@ -48,7 +48,8 @@ public class User extends RepresentationModel<User> implements UserDetails {
     @ValidPassword
     private String password;
 
-    private boolean enabled;
+//    @Column
+//    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
