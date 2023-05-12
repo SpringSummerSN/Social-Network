@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap'); */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+hmtl,
+body {
+  height: auto;
+  width: auto;
+  @apply bg-gray-50;
+}
+
+/* 
+pp {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem 0.5rem;
+} */
+
+/* section {
+  width: 100%;
+  max-width: 420px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.4);
+} */
+
+/* form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+} */
+
+/* a,
+a:visited {
+  color: #fff;
+} */
+
+/* input[type='text'],
+input[type='password'],
+button,
+textarea {
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+} */
+
+/* label,
+button {
+  margin-top: 1rem;
+} */
+
+/* button {
+  padding: 0.5rem;
+} */
+
+.instructions {
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  bottom: -10px;
+}
+
+.instructions > svg {
+  margin-right: 0.25rem;
+}
+
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
+.hide {
+  display: none;
+}
+
+.valid {
+  color: limegreen;
+  margin-left: 0.25rem;
+}
+
+.invalid {
+  color: red;
+  margin-left: 0.25rem;
+}
+
+.errmsg {
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 0.375rem;
+  @apply shadow-sm;
+}
+
+.line {
+  display: inline-block;
+}
+
+@layer components {
+  .form-label {
+    @apply block mb-1.5 text-sm font-semibold text-gray-900;
+  }
+
+  .form-field {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-indigo-600 focus:border-indigo-600 block w-full p-2.5;
+  }
+
+  .form-button {
+    @apply flex w-full justify-center rounded-md bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+  }
+
+  .form-button-inactive {
+    @apply flex w-full justify-center rounded-md bg-gray-600 hover:bg-gray-700 px-5 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+  }
+
+  .form-button::after,
+  .form-button-inactive::after {
+    content: 'Sign Up';
+  }
+
+  .form-button-inactive:hover::after {
+    content: 'Enter valid data to continue';
+  }
+
+  .form-button-login {
+    @apply flex w-full justify-center rounded-md bg-indigo-600 hover:bg-indigo-700 px-5 py-2.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+  }
+
+  .list-item {
+    @apply text-base font-semibold tracking-tight text-gray-700 hover:underline hover:text-indigo-600;
+  }
+}
