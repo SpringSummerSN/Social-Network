@@ -9,6 +9,8 @@ services:
       args:
         - MYSQL_DATABASE=networkappp
         - MYSQL_ROOT_PASSWORD=root
+    ports: 
+      - "3306:3306"
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -43,4 +45,3 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=mongoadmin
       - MONGO_INITDB_ROOT_PASSWORD=bdung
     image: mongo
-
