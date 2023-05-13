@@ -44,7 +44,7 @@ public class TokenService {
         if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
             return "confirmationerror";
         } else {
-//            user.setEnabled(true);
+            user.setEnabled(true);
             userRepository.save(user);
             System.out.println("tutaj");
             return "confirmation";

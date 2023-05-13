@@ -48,8 +48,8 @@ public class User extends RepresentationModel<User> implements UserDetails {
     @ValidPassword
     private String password;
 
-//    @Column
-//    private boolean enabled;
+    @Column(columnDefinition = "boolean default false")
+    private boolean enabled;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -128,6 +128,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
 
                 '}';
     }
+
 
 
 
