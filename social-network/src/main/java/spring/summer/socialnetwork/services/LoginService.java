@@ -1,11 +1,13 @@
 package spring.summer.socialnetwork.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import spring.summer.socialnetwork.dto.LoginDTO;
 import spring.summer.socialnetwork.dto.TokenDTO;
 import spring.summer.socialnetwork.models.User;
@@ -28,7 +30,7 @@ public class LoginService {
     }
 
 
-    public TokenDTO authenticate(LoginDTO LoginDTO){
+    public ResponseEntity<TokenDTO> authenticate(LoginDTO LoginDTO){
         try {
 
             authenticationManager.authenticate(
@@ -36,15 +38,18 @@ public class LoginService {
 
             );
         } catch (AuthenticationException e) {
-            return null;
+            return ResponseEntity.status(404).body(new TokenDTO().builder()
+                    .message("Your data is invalid")
+                    .build());
         }
         User user = userRepository.findByEmail(LoginDTO.getEmail()).get();
         String jwttoken = jwtService.generateToken(user);
-        return TokenDTO.builder()
+        return ResponseEntity.ok(
+                TokenDTO.builder()
                 .token(jwttoken)
                 .message("This is your auth token")
-                .build();
-
+                .build()
+                );
 
 
     }

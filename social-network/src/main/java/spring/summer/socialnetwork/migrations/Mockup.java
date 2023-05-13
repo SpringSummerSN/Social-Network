@@ -1,10 +1,9 @@
-package spring.summer.socialnetwork;
+package spring.summer.socialnetwork.migrations;
 
 import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 import spring.summer.socialnetwork.models.Group;
-//import spring.summer.socialnetwork.models.Message;
 import spring.summer.socialnetwork.models.Role;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.GroupRepository;
@@ -40,7 +39,7 @@ public class Mockup {
                         .password(password)
                         .name(firstName)
                         .surname(lastName)
-                        .roles(List.of(new Role("USER")))
+                        .roles(Role.USER)
                         .build();
                 userRepository.save(newUser);
                 userList.add(newUser);

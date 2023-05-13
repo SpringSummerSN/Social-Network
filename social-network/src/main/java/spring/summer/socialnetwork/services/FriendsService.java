@@ -7,7 +7,6 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import spring.summer.socialnetwork.dto.InvitationRequestDTO;
-import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.UserRepository;
 

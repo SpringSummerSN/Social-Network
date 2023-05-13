@@ -12,6 +12,8 @@ import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import spring.summer.socialnetwork.validator.ValidPassword;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -51,13 +53,9 @@ public class User extends RepresentationModel<User> implements UserDetails {
     @Column(columnDefinition = "boolean default false")
     private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
+    @Column(name = "roles", columnDefinition = "integer default 0")
+    private Role roles;
+
 
     //////????
     @ManyToMany(fetch = FetchType.LAZY)
@@ -78,6 +76,9 @@ public class User extends RepresentationModel<User> implements UserDetails {
     private List<User> friends;
 
 
+
+
+
     public void add_invitation(User user){
         invitations.add(user);
     }
@@ -86,7 +87,18 @@ public class User extends RepresentationModel<User> implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> list = new ArrayList<>();
+
+         list.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return String.valueOf(roles);
+            }
+        });
+
+      return list;
+
+
     }
 
     @Override
@@ -95,9 +107,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
     }
 
 
-    @PrePersist
-    public void set_role_automatically() {
-    }
+
 
     @Override
     public boolean isAccountNonExpired() {

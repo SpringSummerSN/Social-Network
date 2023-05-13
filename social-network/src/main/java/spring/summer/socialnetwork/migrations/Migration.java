@@ -3,15 +3,9 @@ package spring.summer.socialnetwork.migrations;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.Role;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.UserRepository;
-import spring.summer.socialnetwork.services.UserService;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class Migration {
@@ -35,7 +29,7 @@ public class Migration {
                     .password("Admin123*")
                    .name("admin")
                    .surname("admin")
-                    .roles(Arrays.asList(new Role[]{new Role("ADMIN")}))
+                    .roles(Role.ADMIN)
                     .build();
             userRepository.save(new_user);
         }

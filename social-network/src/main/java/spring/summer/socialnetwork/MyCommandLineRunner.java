@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import spring.summer.socialnetwork.migrations.Migration;
+import spring.summer.socialnetwork.migrations.Mockup;
 
 @Component
 public class MyCommandLineRunner implements CommandLineRunner {

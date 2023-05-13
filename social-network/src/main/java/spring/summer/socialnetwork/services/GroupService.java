@@ -9,8 +9,6 @@ import spring.summer.socialnetwork.models.Group;
 import spring.summer.socialnetwork.repositories.GroupRepository;
 import spring.summer.socialnetwork.repositories.UserRepository;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.UserRepository;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 import java.util.List;
 import java.util.Optional;
