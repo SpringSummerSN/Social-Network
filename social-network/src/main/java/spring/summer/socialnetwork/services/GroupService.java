@@ -1,10 +1,13 @@
 package spring.summer.socialnetwork.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.summer.socialnetwork.dto.GroupDTO;
 import spring.summer.socialnetwork.models.Group;
+
 import spring.summer.socialnetwork.repositories.GroupRepository;
+import spring.summer.socialnetwork.repositories.UserRepository;
 
 import java.util.List;
 
@@ -14,9 +17,12 @@ public class GroupService {
     public static final String GROUP_NOT_FOUND = "Group with id %s was not found.";
     private final GroupRepository groupRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public GroupService(GroupRepository groupRepository) {
+    public GroupService(GroupRepository groupRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Group> getAllGroup() {
@@ -28,12 +34,18 @@ public class GroupService {
                 .orElseThrow(() -> new RuntimeException(String.format(GROUP_NOT_FOUND, id)));
     }
 
+    @Transactional
     public void deleteGroupById(Long id) {
         groupRepository.deleteById(id);
     }
 
+    @Transactional
     public void addGroup(GroupDTO groupDTO) {
-        Group group = mapToGroup(groupDTO);
+        var group = Group.builder()
+                .name(groupDTO.getName())
+                .description(groupDTO.getDescription())
+                .build();
+
         groupRepository.save(group);
     }
 
@@ -45,10 +57,5 @@ public class GroupService {
         }).orElseThrow(() -> new RuntimeException(String.format(GROUP_NOT_FOUND, id)));
     }
 
-    private static Group mapToGroup(GroupDTO groupDTO) {
-        return Group.builder()
-                .name(groupDTO.getName())
-                .description(groupDTO.getDescription())
-                .build();
-    }
+
 }

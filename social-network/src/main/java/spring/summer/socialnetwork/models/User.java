@@ -3,13 +3,17 @@ package spring.summer.socialnetwork.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import spring.summer.socialnetwork.validator.ValidPassword;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,7 +23,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class User extends RepresentationModel<User> implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,23 +39,26 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String email;
 
+    @NotEmpty(message = "Name cannot be empty")
+    @Size(min=2, max=150)
     private String name;
-
+    @NotEmpty(message = "Surname cannot be empty")
+    @Size(min=2, max=150)
     private String surname;
 
     @Column(nullable = false, name = "password")
+    @ValidPassword
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "users_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private List<Role> roles;
+    @Column(columnDefinition = "boolean default false")
+    private boolean enabled;
+
+    @Column(name = "roles", columnDefinition = "integer default 0")
+    private Role roles;
+
 
     //////????
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "invitations_users",
             joinColumns = @JoinColumn(name = "user_1_id"),
@@ -60,19 +67,38 @@ public class User implements UserDetails {
     private List<User> invitations;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "friends_users",
             joinColumns = @JoinColumn(name = "user_1_id"),
             inverseJoinColumns = @JoinColumn(name = "user_2_id")
     )
     private List<User> friends;
-//////Czekamy na lepsze pomysły ze znajomomymi :D
+
+
+
+
+
+    public void add_invitation(User user){
+        invitations.add(user);
+    }
+
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        List<GrantedAuthority> list = new ArrayList<>();
+
+         list.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return String.valueOf(roles);
+            }
+        });
+
+      return list;
+
+
     }
 
     @Override
@@ -81,9 +107,7 @@ public class User implements UserDetails {
     }
 
 
-    @PrePersist
-    public void set_role_automatically() {
-    }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -104,4 +128,20 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+
+                '}';
+    }
+
+
+
+
+
 }
+
