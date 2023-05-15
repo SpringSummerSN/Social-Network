@@ -17,6 +17,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
      List<User> findFirst10ByOrderByIdAsc();
 
+     Optional<User> getUserById(Long userId);
+
 
 
 }
