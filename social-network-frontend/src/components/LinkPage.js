@@ -13,7 +13,7 @@ const LinkPage = () => {
           <div className="p-5 space-y-3 md:space-y-4 sm:p-7">
             <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">Links</h1>
 
-            <h2 class="text-xl font-bold tracking-tight text-gray-800">Public:</h2>
+            <h2 className="text-xl font-bold tracking-tight text-gray-800">Public:</h2>
             <ul className="list-disc list-inside">
               <li className="list-item">
                 <Link to="/login">Login</Link>
