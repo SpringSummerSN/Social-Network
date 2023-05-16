@@ -12,4 +12,6 @@ public class InvitationRequestDTO {
     private String receiver;
 
 
+
+
 }

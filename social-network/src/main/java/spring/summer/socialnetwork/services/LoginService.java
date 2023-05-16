@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import spring.summer.socialnetwork.dto.LoginDTO;
+import spring.summer.socialnetwork.dto.RefreshTokenDTO;
 import spring.summer.socialnetwork.dto.TokenDTO;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.UserRepository;
@@ -30,7 +31,7 @@ public class LoginService {
     }
 
 
-    public ResponseEntity<TokenDTO> authenticate(LoginDTO LoginDTO){
+    public ResponseEntity<TokenDTO> authenticate(LoginDTO LoginDTO) {
         try {
 
             authenticationManager.authenticate(
@@ -46,13 +47,23 @@ public class LoginService {
         String jwttoken = jwtService.generateToken(user);
         return ResponseEntity.ok(
                 TokenDTO.builder()
-                .token(jwttoken)
-                .message("This is your auth token")
-                .build()
-                );
+                        .token(jwttoken)
+                        .message("This is your auth token")
+                        .role(user.getRoles())
+                        .build()
+        );
 
 
     }
+    public ResponseEntity<RefreshTokenDTO> refreshTokenDTOResponseEntity(RefreshTokenDTO tokenDTO){
+        String jwtToken = jwtService.generateToken(tokenDTO.getToken());
+        return ResponseEntity.ok(
+                new RefreshTokenDTO("This is your refresh token", jwtToken)
+        );
+
+    }
+
+
 
 
 }

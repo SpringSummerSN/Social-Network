@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class OpenAPIConfig {
 
-
+    public Long JwtRefreshExpirationTime;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
