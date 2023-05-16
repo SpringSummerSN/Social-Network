@@ -124,7 +124,7 @@ const Register = () => {
       setPwd('');
       setMatchPwd('');
 
-      navigate(from, { replace: true });
+      // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -148,17 +148,21 @@ const Register = () => {
 
         <div class="w-full bg-white rounded-lg shadow-lg md:mt-3 sm:max-w-md xl:p-0">
           <div class="p-5 space-y-3 md:space-y-4 sm:p-7">
-            <h1 class="text-xl font-bold tracking-tight text-gray-900">Create new account</h1>
+
 
             {success ? (
               <section>
-                <h1>Success!</h1>
-                <p>
-                  <a href="#">Sign In</a>
+                <h1 class="text-xl font-bold tracking-tight text-gray-900">Registration successful!</h1>
+                <p className="text-sm font-light text-gray-500">
+                  You may now sign into your account. {' '}
+                  <Link to="/login" className="font-medium text-indigo-600 hover:underline">
+                    Login here
+                  </Link>
                 </p>
               </section>
             ) : (
               <section>
+                <h1 class="text-xl font-bold tracking-tight text-gray-900">Create new account</h1>
                 {/* errMsg */}
                 <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
                   {errMsg}
