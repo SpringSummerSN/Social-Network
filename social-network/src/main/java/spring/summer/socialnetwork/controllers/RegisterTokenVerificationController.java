@@ -10,6 +10,7 @@ import spring.summer.socialnetwork.services.TokenService;
 public class RegisterTokenVerificationController {
 
     private TokenService tokenService;
+
     @Autowired
     public RegisterTokenVerificationController(TokenService tokenService) {
         this.tokenService = tokenService;

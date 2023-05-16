@@ -7,7 +7,7 @@ const Layout = () => {
   const { auth } = useAuth();
   return (
     <main className="App">
-      {auth?.accessToken && <Navbar />}
+      {auth?.token && <Navbar />}
       <Outlet />
     </main>
   );
