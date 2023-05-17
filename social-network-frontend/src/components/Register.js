@@ -124,7 +124,7 @@ const Register = () => {
       setPwd('');
       setMatchPwd('');
 
-      navigate(from, { replace: true });
+      // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -141,24 +141,28 @@ const Register = () => {
   return (
     <section>
       <div className="flex flex-col items-center justify-center px-5 py-6 mx-auto">
-        <div class="flex items-center mb-2 text-2xl font-semibold text-gray-900">
-          <img class="w-8 h-8 mr-2" src="https://www.svgrepo.com/show/354380/spring-icon.svg" alt="logo" />
+        <div className="flex items-center mb-2 text-2xl font-semibold text-gray-900">
+          <img className="w-8 h-8 mr-2" src="https://www.svgrepo.com/show/354380/spring-icon.svg" alt="logo" />
           Social Network
         </div>
 
-        <div class="w-full bg-white rounded-lg shadow-lg md:mt-3 sm:max-w-md xl:p-0">
-          <div class="p-5 space-y-3 md:space-y-4 sm:p-7">
-            <h1 class="text-xl font-bold tracking-tight text-gray-900">Create new account</h1>
+        <div className="w-full bg-white rounded-lg shadow-lg md:mt-3 sm:max-w-md xl:p-0">
+          <div className="p-5 space-y-3 md:space-y-4 sm:p-7">
+
 
             {success ? (
               <section>
-                <h1>Success!</h1>
-                <p>
-                  <a href="#">Sign In</a>
+                <h1 className="text-xl font-bold tracking-tight text-gray-900">Registration successful!</h1>
+                <p className="text-sm font-light text-gray-500">
+                  You may now sign into your account. {' '}
+                  <Link to="/login" className="font-medium text-indigo-600 hover:underline">
+                    Login here
+                  </Link>
                 </p>
               </section>
             ) : (
               <section>
+                <h1 className="text-xl font-bold tracking-tight text-gray-900">Create new account</h1>
                 {/* errMsg */}
                 <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
                   {errMsg}

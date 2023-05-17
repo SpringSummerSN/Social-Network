@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import spring.summer.socialnetwork.models.Role;
 
 @Data
 @Builder
@@ -12,4 +13,6 @@ import lombok.NoArgsConstructor;
 public class TokenDTO {
     private String token;
     private String message;
+
+    private Role role;
 }

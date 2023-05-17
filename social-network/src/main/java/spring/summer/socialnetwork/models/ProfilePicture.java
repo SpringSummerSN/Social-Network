@@ -12,8 +12,6 @@ public class ProfilePicture {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    private User user;
 
     @Column(unique = true)
     private String path;
