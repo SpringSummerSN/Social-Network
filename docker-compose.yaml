@@ -4,13 +4,15 @@ services:
 
   db:
     build:
+      
       context: .
       dockerfile: ./social-network/Dockerfile-db
       args:
-        - MYSQL_DATABASE=networkappp
+        - MYSQL_DATABASE=networkapp
         - MYSQL_ROOT_PASSWORD=root
     ports: 
       - "3306:3306"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -45,3 +47,18 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=mongoadmin
       - MONGO_INITDB_ROOT_PASSWORD=bdung
     image: mongo
+
+  app:
+    depends_on:
+      - db
+      - mongo
+      - kafka
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/networkapp
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    build:
+      context: .
+      dockerfile: ./social-network/Dockerfile-app
+    ports: 
+      - "8080:8080"
