@@ -11,6 +11,7 @@ const PersistLogin = () => {
 
   useEffect(() => {
     let isMounted = true;
+
     const verifyRefreshToken = async () => {
       try {
         await refresh();
@@ -21,7 +22,10 @@ const PersistLogin = () => {
       }
     };
 
-    !auth?.token && persist ? verifyRefreshToken() : setIsLoading(false);
+    if (!persist)
+      localStorage.removeItem('token');
+
+    !auth?.token ? verifyRefreshToken() : setIsLoading(false);
 
     return () => isMounted = false;
 

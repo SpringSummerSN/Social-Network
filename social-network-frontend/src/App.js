@@ -27,7 +27,6 @@ function App() {
         {/* public routes */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="linkpage" element={<LinkPage />} />
         <Route path="unauthorized" element={<Unauthorized />} />
 
         {/* protected routes */}
@@ -42,6 +41,7 @@ function App() {
             <Route path="friends" element={<Friends />} />
             <Route path="groups" element={<Groups />} />
             <Route path="messages" element={<Messages />} />
+            <Route path="linkpage" element={<LinkPage />} />
 
           </Route>
 
@@ -49,6 +49,7 @@ function App() {
 
         {/* catch all */}
         <Route path="*" element={<Missing />} />
+
       </Route>
     </Routes >
   );

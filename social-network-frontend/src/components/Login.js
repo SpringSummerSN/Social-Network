@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
@@ -42,21 +42,13 @@ const Login = () => {
       // const roles = response?.data?.roles;
 
       setAuth({ email, pwd, token });
+      localStorage.setItem('token', token);
       // setAuth({ email: email, password: pwd });
       setEmail('');
       setPwd('');
       navigate(from, { replace: true });
     } catch (err) {
       setErrMsg(err?.response?.data?.message);
-      // if (!err?.response) {
-      //   setErrMsg('No Server Response');
-      // } else if (err.response?.status === 400) {
-      //   setErrMsg('Missing Email of Password');
-      // } else if (err.response?.status === 401) {
-      //   setErrMsg('Unauthorized');
-      // } else {
-      //   setErrMsg('Login Failed');
-      // }
       errRef.current.focus();
     }
   };
@@ -119,14 +111,18 @@ const Login = () => {
                   />
                 </div>
 
-                <div className=''>
+                <div className='flex items-center mb-4'>
                   <input
-                    type='checkbox'
                     id="persist"
+                    type='checkbox'
+                    value=""
                     onChange={togglePersist}
                     checked={persist}
+                    className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounde focus:ring-blue-500'
                   />
-                  <label htmlFor='persist'>
+                  <label
+                    htmlFor='persist'
+                    className='ml-2 text-sm font-medium text-gray-900'>
                     Trust this devise
                   </label>
                 </div>

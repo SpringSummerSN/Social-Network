@@ -6,14 +6,10 @@ const useLogout = () => {
 
   const logout = async () => {
     setAuth({});
-    try {
-      const response = await axios('/logout', {
-        withCredentials: true
-      });
-    } catch (error) {
-      console.error(error);
-    }
+    localStorage.removeItem('token');
+    localStorage.removeItem('persist');
   };
+
   return logout;
 };
 

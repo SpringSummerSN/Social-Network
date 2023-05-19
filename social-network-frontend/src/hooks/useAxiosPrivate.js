@@ -25,18 +25,12 @@ const useAxiosPrivate = () => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newAccessToken = await refresh();
+          localStorage.setItem('token', newAccessToken);
           prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
           return axiosPrivate(prevRequest);
         }
         return Promise.reject(error);
       }
-      // (error) => {
-      //   if (error.code === "ERR_CANCELED") {
-      //     // aborted in useEffect cleanup
-      //     return Promise.resolve({ status: 499 });
-      //   }
-      //   return Promise.reject((error.response && error.response.data) || 'Error');
-      // }
     );
 
     return () => {

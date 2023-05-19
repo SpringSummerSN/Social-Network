@@ -2,14 +2,19 @@ import axios, { axiosPrivate } from '../api/axios';
 import useAuth from './useAuth';
 
 const useRefreshToken = () => {
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
 
   const refresh = async () => {
-    const response = await axiosPrivate.post('/refreshtoken', { token: auth.token }, {
+    const response = await axios.get('/refreshtoken', {
       withCredentials: true,
-    }).catch(function (error) {
-      console.log(error);
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        // 'Authorization': `Bearer ${auth.token}`
+      }
     });
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
 
     setAuth(prev => {
       console.log("Old token: " + prev.token);
@@ -20,8 +25,11 @@ const useRefreshToken = () => {
         token: response.data.token
       };
     });
+
+    localStorage.setItem('token', response.data.token);
     return response.data.token;
   };
+
   return refresh;
 };
 

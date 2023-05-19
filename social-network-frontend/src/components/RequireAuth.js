@@ -5,7 +5,11 @@ const RequireAuth = () => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  return auth?.token ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />;
+  return (
+    auth?.token
+      ? <Outlet />
+      : <Navigate to="/login" state={{ from: location }} replace />
+  );
 };
 
 // Role based auth
