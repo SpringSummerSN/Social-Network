@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import spring.summer.socialnetwork.dto.LoginDTO;
 import spring.summer.socialnetwork.dto.RefreshTokenDTO;
 import spring.summer.socialnetwork.dto.TokenDTO;
@@ -55,11 +55,12 @@ public class LoginService {
 
 
     }
-    public ResponseEntity<RefreshTokenDTO> refreshTokenDTOResponseEntity(RefreshTokenDTO tokenDTO){
-        String jwtToken = jwtService.generateToken(tokenDTO.getToken());
+    public ResponseEntity<RefreshTokenDTO> refreshTokenDTOResponseEntity(){
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        String jwtToken = jwtService.generateToken(user);
         return ResponseEntity.ok(
-                new RefreshTokenDTO("This is your refresh token", jwtToken)
-        );
+                new RefreshTokenDTO("This is your refresh token", jwtToken));
 
     }
 
