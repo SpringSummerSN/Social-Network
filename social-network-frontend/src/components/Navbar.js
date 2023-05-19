@@ -8,9 +8,8 @@ import {
   UserCircleIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
-import { Fragment, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider';
+import useLogout from '../hooks/useLogout';
 
 const navigation = [
   { name: 'Home', path: '/', current: true },
@@ -25,15 +24,14 @@ function classNames(...classes) {
 }
 
 const Navbar = () => {
-  const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const logout = useLogout();
 
-  const logout = async () => {
-    // if used in more components, this should be in context
-    // axios to /logout endpoint
-    setAuth({});
+  const signOut = async () => {
+    await logout();
     navigate('/linkpage');
   };
+
   return (
     <Disclosure as="nav" className="sticky top-0 z-50 bg-gray-800">
       {({ open }) => (
@@ -174,7 +172,7 @@ const Navbar = () => {
                               active ? 'bg-gray-100' : '',
                               'cursor-pointer flex flex-row items-center px-4 py-2 text-sm text-gray-700'
                             )}
-                            onClick={logout}
+                            onClick={signOut}
                           >
                             <ArrowLeftOnRectangleIcon className="block h-8 w-8 mr-2" aria-hidden="true" />
                             Sign out

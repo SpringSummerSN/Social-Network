@@ -6,7 +6,7 @@ import useAuth from '../hooks/useAuth';
 const LOGIN_URL = '/login';
 
 const Login = () => {
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,18 +47,27 @@ const Login = () => {
       setPwd('');
       navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrMsg('Missing Email of Password');
-      } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
-      } else {
-        setErrMsg('Login Failed');
-      }
+      setErrMsg(err?.response?.data?.message);
+      // if (!err?.response) {
+      //   setErrMsg('No Server Response');
+      // } else if (err.response?.status === 400) {
+      //   setErrMsg('Missing Email of Password');
+      // } else if (err.response?.status === 401) {
+      //   setErrMsg('Unauthorized');
+      // } else {
+      //   setErrMsg('Login Failed');
+      // }
       errRef.current.focus();
     }
   };
+
+  const togglePersist = () => {
+    setPersist(prev => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   return (
     <section>
@@ -110,6 +119,17 @@ const Login = () => {
                   />
                 </div>
 
+                <div className=''>
+                  <input
+                    type='checkbox'
+                    id="persist"
+                    onChange={togglePersist}
+                    checked={persist}
+                  />
+                  <label htmlFor='persist'>
+                    Trust this devise
+                  </label>
+                </div>
                 {/* Button */}
                 <button className="form-button-login">Sign In</button>
 
