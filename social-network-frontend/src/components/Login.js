@@ -2,11 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
+import useInput from '../hooks/useInput';
+import useLocalStorage from '../hooks/useLocalStorage';
+import useToggle from '../hooks/useToggle';
 
 const LOGIN_URL = '/login';
 
 const Login = () => {
-  const { setAuth, persist, setPersist } = useAuth();
+  const { setAuth } = useAuth();
+  const [persist] = useLocalStorage('persist', false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,9 +19,12 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [email, setEmail] = useState('');
+  const [email, resetUser, userAttribs] = useInput('email', '');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [check, toggleCheck] = useToggle('persist', false);
+
+  localStorage.removeItem('token');
 
   useEffect(() => {
     userRef.current.focus();
@@ -44,7 +51,8 @@ const Login = () => {
       setAuth({ email, pwd, token });
       localStorage.setItem('token', token);
       // setAuth({ email: email, password: pwd });
-      setEmail('');
+      // setEmail('');
+      resetUser();
       setPwd('');
       navigate(from, { replace: true });
     } catch (err) {
@@ -53,13 +61,13 @@ const Login = () => {
     }
   };
 
-  const togglePersist = () => {
-    setPersist(prev => !prev);
-  };
+  // const togglePersist = () => {
+  //   tog(prev => !prev);
+  // };
 
-  useEffect(() => {
-    localStorage.setItem("persist", persist);
-  }, [persist]);
+  // useEffect(() => {
+  //   localStorage.setItem("persist", persist);
+  // }, [persist]);
 
   return (
     <section>
@@ -89,8 +97,7 @@ const Login = () => {
                     placeholder="email@mail.com"
                     ref={userRef}
                     autoComplete="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
+                    {...userAttribs}
                     required
                   />
                 </div>
@@ -115,9 +122,9 @@ const Login = () => {
                   <input
                     id="persist"
                     type='checkbox'
-                    value=""
-                    onChange={togglePersist}
-                    checked={persist}
+                    // value=""
+                    onChange={toggleCheck}
+                    checked={check}
                     className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounde focus:ring-blue-500'
                   />
                   <label

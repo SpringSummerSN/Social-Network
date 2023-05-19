@@ -1,14 +1,16 @@
 import axios, { axiosPrivate } from '../api/axios';
 import useAuth from './useAuth';
+import useLocalStorage from './useLocalStorage';
 
 const useRefreshToken = () => {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
+  const [persist] = useLocalStorage('persist', false);
 
   const refresh = async () => {
     const response = await axios.get('/refreshtoken', {
       withCredentials: true,
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${persist ? localStorage.getItem('token') : auth.token}`
         // 'Authorization': `Bearer ${auth.token}`
       }
     });
@@ -26,7 +28,11 @@ const useRefreshToken = () => {
       };
     });
 
-    localStorage.setItem('token', response.data.token);
+    if (persist)
+      localStorage.setItem('token', response.data.token);
+    else
+      localStorage.removeItem('token');
+
     return response.data.token;
   };
 

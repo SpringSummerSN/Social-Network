@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { axiosPrivate } from "../api/axios";
 import useAuth from "./useAuth";
-import useRefreshToken from "./useRefreshToken";
+import { default as useLocalStorage, default as useRefreshToken } from "./useRefreshToken";
 
 const useAxiosPrivate = () => {
   const refresh = useRefreshToken();
   const { auth } = useAuth();
+  const persist = useLocalStorage('persist', false);
 
   useEffect(() => {
 
@@ -25,7 +26,7 @@ const useAxiosPrivate = () => {
         if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newAccessToken = await refresh();
-          localStorage.setItem('token', newAccessToken);
+          if (persist) localStorage.setItem('token', newAccessToken);
           prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
           return axiosPrivate(prevRequest);
         }
