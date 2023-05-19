@@ -1,7 +1,18 @@
 import React from 'react';
+import useAuth from '../hooks/useAuth';
 
 const Profile = () => {
-  return <div>This is Profile</div>;
+
+  const { auth } = useAuth();
+
+  return (
+    <>
+      <div>User email: {auth?.email}</div>
+      <div>User token: {auth?.token}</div>
+    </>
+  );
+
+
 };
 
 export default Profile;

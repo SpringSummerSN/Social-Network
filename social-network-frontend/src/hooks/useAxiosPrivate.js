@@ -12,7 +12,7 @@ const useAxiosPrivate = () => {
     const requestIntercept = axiosPrivate.interceptors.request.use(
       config => {
         if (!config.headers['Authorization']) {
-          config.headers['Authorization'] = `Bearer $(auth?.token)`;
+          config.headers['Authorization'] = `Bearer ${auth?.token}`;
         }
         return config;
       }, (error) => Promise.reject(error)
@@ -22,7 +22,7 @@ const useAxiosPrivate = () => {
       response => response,
       async (error) => {
         const prevRequest = error?.config;
-        if (error?.response.status === 403 && !prevRequest?.sent) {
+        if (error?.response?.status === 403 && !prevRequest?.sent) {
           prevRequest.sent = true;
           const newAccessToken = await refresh();
           prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
@@ -30,15 +30,22 @@ const useAxiosPrivate = () => {
         }
         return Promise.reject(error);
       }
+      // (error) => {
+      //   if (error.code === "ERR_CANCELED") {
+      //     // aborted in useEffect cleanup
+      //     return Promise.resolve({ status: 499 });
+      //   }
+      //   return Promise.reject((error.response && error.response.data) || 'Error');
+      // }
     );
 
     return () => {
-      axiosPrivate.interceptors.response.eject(requestIntercept);
+      axiosPrivate.interceptors.request.eject(requestIntercept);
       axiosPrivate.interceptors.response.eject(responseIntercept);
-    }
-  }, [auth, refresh])
+    };
+  }, [auth, refresh]);
 
   return axiosPrivate;
-}
+};
 
 export default useAxiosPrivate;
