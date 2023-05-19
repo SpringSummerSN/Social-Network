@@ -1,5 +1,6 @@
 package spring.summer.socialnetwork.repositories;
 
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import spring.summer.socialnetwork.models.User;

@@ -23,7 +23,6 @@ public class RegisterController {
 
     @PostMapping
     public ResponseEntity<String> register(@RequestBody UserDTO userDTO) throws EmailExistsException {
-        System.out.println(userDTO);
         return ResponseEntity.ok(registerService.register(userDTO));
     }
 

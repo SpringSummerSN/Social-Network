@@ -30,7 +30,8 @@ public class RegisterService {
 
     private void register_walidace(UserDTO userDTO) throws EmailExistsException {
         if(userRepository.existsByEmail(userDTO.getEmail())){
-            throw new EmailExistsException("That email already exists");
+            System.out.println("Test");
+            throw new EmailExistsException();
         }
 
     }
