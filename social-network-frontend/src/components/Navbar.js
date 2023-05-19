@@ -16,7 +16,7 @@ const navigation = [
   { name: 'Friends', path: 'friends', current: false },
   { name: 'Groups', path: 'groups', current: false },
   { name: 'Messages', path: 'messages', current: false },
-  { name: 'Links', path: 'linkpage', current: false },
+  { name: 'Admin Page', path: 'admin', current: false },
 ];
 
 function classNames(...classes) {

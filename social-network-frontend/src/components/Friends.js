@@ -1,7 +1,12 @@
 import React from 'react';
+import Users from './Users';
 
 const Friends = () => {
-  return <div>This is Friends</div>;
+  return (
+    <div>
+      <Users />
+    </div>
+  );
 };
 
 export default Friends;

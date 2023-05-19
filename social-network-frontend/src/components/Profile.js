@@ -7,13 +7,11 @@ const Profile = () => {
   const { auth } = useAuth();
 
   const decoded = jwtDecode(auth?.token);
-  console.log(decoded);
 
   return (
-    <>
-      <div>User email: {decoded?.sub}</div>
-      <div>User token: {auth?.token}</div>
-    </>
+    <section>
+      <div> User email: {decoded?.sub}</div >
+    </section >
   );
 
 
