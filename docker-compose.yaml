@@ -3,6 +3,7 @@ version: '3.8'
 services:
 
   db:
+    image: damiantomczyszyn/socialnetwork:database
     build:
       
       context: .
@@ -58,6 +59,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    image: damiantomczyszyn/socialnetwork:backend
     build:
       context: .
       dockerfile: ./social-network/Dockerfile-app
@@ -66,7 +68,7 @@ services:
 
   frontend:
     container_name: dockerized-react
-    image: dockerized-react
+    image: damiantomczyszyn/socialnetwork:frontend
     build:
       context: .
       dockerfile: ./social-network-frontend/Dockerfile
