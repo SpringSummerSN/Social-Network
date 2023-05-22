@@ -4,25 +4,30 @@ import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 import spring.summer.socialnetwork.models.Group;
+import spring.summer.socialnetwork.models.Post;
 import spring.summer.socialnetwork.models.Role;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.GroupRepository;
+import spring.summer.socialnetwork.repositories.PostRepository;
 import spring.summer.socialnetwork.repositories.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
 public class Mockup {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
-
+    private final PostRepository postRepository;
     private List<User> userList = new ArrayList<>();
 
     public void mockData() {
         mockUsers();
         mockGroups();
+        mockPosts();
     }
 
     private void mockUsers() {
@@ -70,5 +75,17 @@ public class Mockup {
         groupRepository.save(newGroup3);
     }
 
-
+    private void mockPosts() {
+        for (User user : userList) {
+            Faker faker = new Faker();
+            Random random = new Random();
+            Post post = Post.builder()
+                    .creator(user)
+                    .title("post " + user.getName())
+                    .description(faker.lorem().sentence(10, 20))
+                    .likes(new HashSet<>(userList.subList(0, random.nextInt(userList.size()))))
+                    .build();
+            postRepository.save(post);
+        }
     }
+}
