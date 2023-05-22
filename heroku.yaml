@@ -1,0 +1,53 @@
+build:
+  docker:
+    web: Dockerfile
+    db: social-network/Dockerfile-db
+    app: social-network/Dockerfile-app
+    frontend: social-network-frontend/Dockerfile
+
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+      options:
+        version: 13
+
+  config:
+    SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/networkapp
+    SPRING_DATASOURCE_USERNAME: root
+    SPRING_DATASOURCE_PASSWORD: root
+    SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+
+  formation:
+    - process: db
+      type: web
+      quantity: 1
+
+    - process: zookeeper
+      type: web
+      quantity: 1
+
+    - process: kafka
+      type: web
+      quantity: 1
+
+    - process: mongo
+      type: web
+      quantity: 1
+
+    - process: app
+      type: web
+      quantity: 1
+
+    - process: frontend
+      type: web
+      quantity: 1
+
+buildpacks:
+  - buildpack: heroku/nodejs
+
+services:
+  - postgresql
+
+run:
+  web: npm start
