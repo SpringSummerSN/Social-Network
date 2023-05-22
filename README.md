@@ -19,7 +19,7 @@ SpringSummerSocialNetwork is a project implementing a simple social networking s
 Swagger [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 
 ## How do I look
-<img src="https://github.com/SpringSummerSN/Social-Network/blob/documentation_update/images/reg_img.PNG" alt="registration window">
+<img src="https://github.com/SpringSummerSN/Social-Network/blob/documentation_update/images/reg_img.PNG" alt="registration window" style="max-width: 100%;width: 620px;">
 
 ## Developers section
 ### Develop start:
