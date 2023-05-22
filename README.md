@@ -1,12 +1,12 @@
 # Social-Network
 SpringSummerSocialNetwork is a project implementing a simple social networking site. The assumption of the application is to enable communication and grouping of users.
 
-##Technologies
+## Technologies
 * Spring
 * React
 * MySQL
 
-##The application has
+## The application has
 * User registration and login
 * Adding profile pictures
 * Adding users to friends
