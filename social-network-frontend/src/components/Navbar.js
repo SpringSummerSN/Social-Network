@@ -15,7 +15,7 @@ const navigation = [
   { name: 'Home', path: '/', current: true },
   { name: 'Friends', path: 'friends', current: false },
   { name: 'Groups', path: 'groups', current: false },
-  { name: 'Messages', path: 'messages', current: false },
+  { name: 'Chats', path: 'chats', current: false },
   { name: 'Admin Page', path: 'admin', current: false },
 ];
 

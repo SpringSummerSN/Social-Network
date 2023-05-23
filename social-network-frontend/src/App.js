@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import Admin from './components/Admin.js';
+import ChatRoom from './components/Chat.js';
 import Friends from './components/Friends.js';
 import Groups from './components/Groups.js';
 import Home from './components/Home';
@@ -42,6 +43,7 @@ function App() {
             <Route path="groups" element={<Groups />} />
             <Route path="messages" element={<Messages />} />
             <Route path="linkpage" element={<LinkPage />} />
+            <Route path='chats' element={< ChatRoom />} />
 
           </Route>
 
