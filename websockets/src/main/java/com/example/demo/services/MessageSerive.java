@@ -18,5 +18,4 @@ public class MessageSerive {
         messageRepository.save(message);
     }
 
-
 }
