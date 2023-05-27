@@ -1,25 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import { PaperAirplaneIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import jwtDecode from 'jwt-decode';
+import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { over } from 'stompjs';
 import useAuth from '../hooks/useAuth';
 
 var stompClient = null;
+
 const ChatRoom = () => {
+  const { auth } = useAuth();
+  const messagesEndRef = useRef(null);
+  const decoded = jwtDecode(auth?.token);
+
   const [privateChats, setPrivateChats] = useState(new Map());
   const [publicChats, setPublicChats] = useState([]);
   const [tab, setTab] = useState("CHATROOM");
-  const { auth } = useAuth();
-
   const [userData, setUserData] = useState({
-    username: '',
+    username: decoded.sub,
     receivername: '',
     connected: false,
     message: ''
   });
 
   useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+    return () => {
+      connect();
+    };
+  }, []);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [publicChats, privateChats]);
 
   const connect = () => {
     let Sock = new SockJS('http://localhost:8081/ws');
@@ -30,8 +45,7 @@ const ChatRoom = () => {
   const onConnected = () => {
     setUserData({ ...userData, "connected": true });
     stompClient.subscribe('/chatroom/public', onMessageReceived);
-    // TODO: auth state 
-    stompClient.subscribe('/user/' + auth.email + '/private', onPrivateMessage);
+    stompClient.subscribe('/user/' + userData.username + '/private', onPrivateMessage);
     userJoin();
   };
 
@@ -56,6 +70,8 @@ const ChatRoom = () => {
         publicChats.push(payloadData);
         setPublicChats([...publicChats]);
         break;
+      default:
+        console.log("Unknown status");
     }
   };
 
@@ -75,13 +91,13 @@ const ChatRoom = () => {
 
   const onError = (err) => {
     console.log(err);
+
   };
 
   const handleMessage = (event) => {
     const { value } = event.target;
     setUserData({ ...userData, "message": value });
   };
-
   const sendValue = () => {
     if (stompClient) {
       var chatMessage = {
@@ -111,15 +127,6 @@ const ChatRoom = () => {
       stompClient.send("/app/private-message", {}, JSON.stringify(chatMessage));
       setUserData({ ...userData, "message": "" });
     }
-  };
-
-  const handleUsername = (event) => {
-    const { value } = event.target;
-    setUserData({ ...userData, "username": value });
-  };
-
-  const registerUser = () => {
-    connect();
   };
 
   return (
