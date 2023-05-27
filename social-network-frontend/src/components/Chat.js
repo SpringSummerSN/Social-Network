@@ -123,17 +123,35 @@ const ChatRoom = () => {
   };
 
   return (
-    <div className="container">
-      {userData.connected ?
+    <div className='relative'>
+      <span className='text-xl font-bold'>Your chats</span>
+
+      {userData.connected &&
         <div className="chat-box">
+
+          {/*Chats list*/}
           <div className="member-list">
-            <ul>
-              <li onClick={() => { setTab("CHATROOM"); }} className={`member ${tab === "CHATROOM" && "active"}`}>Chatroom</li>
+            <ul className='space-y-3'>
+              <li onClick={() => { setTab("CHATROOM"); }} className={`member ${tab === "CHATROOM" && "active"}`}>
+                <UserGroupIcon className='h-8 w-8' />
+                <span>Group chat</span>
+              </li>
+
               {[...privateChats.keys()].map((name, index) => (
-                <li onClick={() => { setTab(name); }} className={`member ${tab === name && "active"}`} key={index}>{name}</li>
+                <li onClick={() => { setTab(name); }} className={`member ${tab === name && "active"}`} key={index}>
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src="/assets/profile-picture-1.jpg"
+                    // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt="logo"
+                  />
+                  <span>{name}</span>
+                </li>
               ))}
             </ul>
           </div>
+
+          {/* Public chat */}
           {tab === "CHATROOM" && <div className="chat-content">
             <ul className="chat-messages">
               {publicChats.map((chat, index) => (
@@ -143,13 +161,17 @@ const ChatRoom = () => {
                   {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
                 </li>
               ))}
+              <div ref={messagesEndRef} />
             </ul>
 
             <div className="send-message">
-              <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} />
-              <button type="button" className="send-button" onClick={sendValue}>send</button>
+              <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} />
+              <PaperAirplaneIcon type="button" className="send-button" onClick={sendValue} />
             </div>
+
           </div>}
+
+          {/* Private chat */}
           {tab !== "CHATROOM" && <div className="chat-content">
             <ul className="chat-messages">
               {[...privateChats.get(tab)].map((chat, index) => (
@@ -159,28 +181,19 @@ const ChatRoom = () => {
                   {chat.senderName === userData.username && <div className="avatar self">{chat.senderName}</div>}
                 </li>
               ))}
+              <div ref={messagesEndRef} />
             </ul>
 
             <div className="send-message">
-              <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} />
-              <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
+              <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} />
+              <PaperAirplaneIcon type="button" className="send-button" onClick={sendPrivateValue} />
             </div>
+
           </div>}
+
         </div>
-        :
-        <div className="register">
-          <input
-            id="user-name"
-            placeholder="Enter your name"
-            name="userName"
-            value={userData.username}
-            onChange={handleUsername}
-            margin="normal"
-          />
-          <button type="button" onClick={registerUser}>
-            connect
-          </button>
-        </div>}
+
+      }
     </div>
   );
 };

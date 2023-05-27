@@ -4,71 +4,19 @@
 
 /* @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap'); */
 
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
 hmtl,
 body {
-  height: auto;
+  margin: 0px;
+  height: 100%;
   width: auto;
   @apply bg-gray-50;
 }
-
-/* 
-pp {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 1rem 0.5rem;
-} */
-
-/* section {
-  width: 100%;
-  max-width: 420px;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1rem;
-  background-color: rgba(0, 0, 0, 0.4);
-} */
-
-/* form {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  flex-grow: 1;
-  padding-bottom: 1rem;
-} */
-
-/* a,
-a:visited {
-  color: #fff;
-} */
-
-/* input[type='text'],
-input[type='password'],
-button,
-textarea {
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  padding: 0.25rem;
-  border-radius: 0.5rem;
-} */
-
-/* label,
-button {
-  margin-top: 1rem;
-} */
-
-/* button {
-  padding: 0.5rem;
-} */
 
 .instructions {
   font-size: 0.75rem;
@@ -148,5 +96,80 @@ button {
 
   .list-item {
     @apply text-base font-semibold tracking-tight text-gray-700 hover:underline hover:text-indigo-600;
+  }
+
+  .chat-box{
+    @apply flex flex-row h-[75vh];
+  }
+
+  .member-list{
+    @apply w-1/5 overflow-y-scroll;
+  }
+
+  .member{
+    @apply flex flex-row items-center space-x-2 bg-white text-gray-900 font-medium indent-[-9999px] sm:indent-0
+    py-3 px-5 my-1 mx-0.5 rounded cursor-pointer shadow;
+  }
+
+  .member.active{
+    @apply bg-gray-100;
+  }
+
+  .member:hover{
+    @apply bg-gray-100;
+  }
+
+  .chat-content{
+    @apply w-4/5 bg-gray-100 rounded ml-2 border border-gray-200;
+  }
+
+  .chat-messages{
+    @apply h-full overflow-y-scroll rounded;
+  }
+
+  .send-message{
+    @apply flex flex-row w-full pt-1;
+  }
+
+  .input-message{
+    @apply w-11/12 bg-gray-200 px-2 text-gray-900 border border-gray-200 outline-none sm:text-sm rounded-lg;
+  }
+
+  .send-button{
+    @apply w-1/12 ml-1 h-11 cursor-pointer text-gray-900;
+  }
+
+  .avatar{
+    background-color: cornflowerblue;
+    padding: 3px 5px;
+    border-radius: 5px;
+    color:#fff;
+  }
+
+  .avatar.self{
+    color:#000;
+    background-color: greenyellow;
+  }
+
+  .message{
+    padding:5px;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    margin: 5px 10px;
+  }
+
+  .message-data{
+    @apply p-1;
+  }
+
+  .message.self{
+    @apply justify-end;
+  }
+
+  ul {
+    padding: 0;
+    list-style-type: none;
   }
 }
