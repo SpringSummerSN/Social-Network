@@ -1,4 +1,4 @@
-import { PaperAirplaneIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, PaperAirplaneIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
@@ -150,15 +150,26 @@ const ChatRoom = () => {
               </li>
 
               {[...privateChats.keys()].map((name, index) => (
-                <li onClick={() => { setTab(name); }} className={`member ${tab === name && "active"}`} key={index}>
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src="/assets/profile-picture-1.jpg"
-                    // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt="logo"
-                  />
-                  <span>{name}</span>
-                </li>
+                name !== userData.username
+                  ?
+                  (
+                    <li onClick={() => { setTab(name); }} className={`member ${tab === name && "active"}`} key={index}>
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src="/assets/profile-picture-1.jpg"
+                        // src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt="logo"
+                      />
+                      <span>{name}</span>
+                    </li>
+                  )
+                  :
+                  (
+                    <li onClick={() => { setTab(name); }} className={`member ${tab === name && "active"}`} key={index}>
+                      <BookmarkIcon className='h-8 w-8' />
+                      <span>Saved messages</span>
+                    </li>
+                  )
               ))}
             </ul>
           </div>
