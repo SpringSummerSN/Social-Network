@@ -98,6 +98,11 @@ const ChatRoom = () => {
     const { value } = event.target;
     setUserData({ ...userData, "message": value });
   };
+
+  const showEmptyMessageAlert = () => {
+    alert("You cannot send an empty message!");
+  };
+
   const sendValue = () => {
     if (stompClient) {
       var chatMessage = {
@@ -173,7 +178,7 @@ const ChatRoom = () => {
 
             <div className="send-message">
               <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} />
-              <PaperAirplaneIcon type="button" className="send-button" onClick={sendValue} />
+              <PaperAirplaneIcon type="button" className="send-button" onClick={userData.message ? sendValue : showEmptyMessageAlert} />
             </div>
 
           </div>}
@@ -193,7 +198,7 @@ const ChatRoom = () => {
 
             <div className="send-message">
               <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} />
-              <PaperAirplaneIcon type="button" className="send-button" onClick={sendPrivateValue} />
+              <PaperAirplaneIcon type="button" className="send-button" onClick={userData.message ? sendPrivateValue : showEmptyMessageAlert} />
             </div>
 
           </div>}
