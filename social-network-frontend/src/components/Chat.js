@@ -191,6 +191,9 @@ const ChatRoom = () => {
           {/* Public chat */}
           {tab === "CHATROOM" && <div className="chat-content">
             <ul className="chat-messages">
+              <div className='flex flex-row justify-center p-2 mx-1 my-2 font-bold'>
+                Welcome to the group chat. Connect with others and be polite.
+              </div>
               {publicChats.map((chat, index) => (
                 <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
                   {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
@@ -211,6 +214,11 @@ const ChatRoom = () => {
           {/* Private chat */}
           {tab !== "CHATROOM" && <div className="chat-content">
             <ul className="chat-messages">
+              {tab === userData.username &&
+                <div className='flex flex-row justify-center p-2 mx-1 my-2 font-bold'>
+                  This is yout private chat. Use it to save messages, important info and other stuff.
+                </div>
+              }
               {[...privateChats.get(tab)].map((chat, index) => (
                 <li className={`message ${chat.senderName === userData.username && "self"}`} key={index}>
                   {chat.senderName !== userData.username && <div className="avatar">{chat.senderName}</div>}
