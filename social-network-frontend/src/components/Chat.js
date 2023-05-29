@@ -99,6 +99,20 @@ const ChatRoom = () => {
     setUserData({ ...userData, "message": value });
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      console.log('Enter is pressed, sending message.');
+      userData.message ? sendValue() : showEmptyMessageAlert();
+    }
+  };
+
+  const handleKeyDownPrivate = (event) => {
+    if (event.key === 'Enter') {
+      console.log('Enter is pressed, sending message.');
+      userData.message ? sendPrivateValue() : showEmptyMessageAlert();
+    }
+  };
+
   const showEmptyMessageAlert = () => {
     alert("You cannot send an empty message!");
   };
@@ -188,7 +202,7 @@ const ChatRoom = () => {
             </ul>
 
             <div className="send-message">
-              <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} />
+              <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} onKeyDown={handleKeyDown} />
               <PaperAirplaneIcon type="button" className="send-button" onClick={userData.message ? sendValue : showEmptyMessageAlert} />
             </div>
 
@@ -208,7 +222,7 @@ const ChatRoom = () => {
             </ul>
 
             <div className="send-message">
-              <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} />
+              <input type="text" className="input-message" placeholder="Enter your message" value={userData.message} onChange={handleMessage} onKeyDown={handleKeyDownPrivate} />
               <PaperAirplaneIcon type="button" className="send-button" onClick={userData.message ? sendPrivateValue : showEmptyMessageAlert} />
             </div>
 
