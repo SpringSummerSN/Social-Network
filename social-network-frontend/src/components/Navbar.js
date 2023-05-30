@@ -5,6 +5,7 @@ import {
   BellIcon,
   Cog6ToothIcon,
   HomeIcon,
+  PlusCircleIcon,
   UserCircleIcon,
   XMarkIcon
 } from '@heroicons/react/24/outline';
@@ -82,6 +83,17 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+                <div
+                  type='button'
+                  onClick={() => { alert("You will be able to create posts soon..."); }}
+                  className='flex flex-row items-center rounded-md px-3 py-2 text-sm font-medium bg-gray-500 text-white cursor-pointer'
+                >
+                  <PlusCircleIcon className='h-4 w-4 mr-1' />
+                  <span className='collapse md:visible'>New post</span>
+                </div>
+
+                {/* Notifications */}
                 <Menu as="div" className="relative ml-3">
                   <div>
                     <Menu.Button
