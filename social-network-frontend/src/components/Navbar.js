@@ -89,8 +89,8 @@ const Navbar = () => {
                   onClick={() => { alert("You will be able to create posts soon..."); }}
                   className='flex flex-row items-center rounded-md px-3 py-2 text-sm font-medium bg-gray-500 text-white cursor-pointer'
                 >
-                  <PlusCircleIcon className='h-4 w-4 mr-1' />
-                  <span className='collapse md:visible'>New post</span>
+                  <PlusCircleIcon className='h-5 w-5' />
+                  <span className='max-md:hidden md:max-2xl:ml-1'>New post</span>
                 </div>
 
                 {/* Notifications */}
