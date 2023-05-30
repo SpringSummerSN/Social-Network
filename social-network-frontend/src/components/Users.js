@@ -4,6 +4,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Users = () => {
   const [users, setUsers] = useState();
+  const [error, setError] = useState();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,15 +15,16 @@ const Users = () => {
 
     const getUsers = async () => {
       try {
-        const response = await axiosPrivate.get('/users/recent', {
+        const response = await axiosPrivate.get('/users', {
           signal: controller.signal
         });
-        const userEmails = response.data.map(user => user.email);
-        console.log(userEmails);
+        const userEmails = response.data._embedded.users.map(user => user.email);
+        // console.log(userEmails);
         isMounted && setUsers(userEmails);
       } catch (err) {
+        setError(err);
         console.error(err);
-        navigate('/login', { state: { from: location }, replace: true });
+        // navigate('/login', { state: { from: location }, replace: true });
       }
     };
 
@@ -42,7 +44,12 @@ const Users = () => {
           <ul>
             {users.map((user, i) => <li key={i}>{user}</li>)}
           </ul>
-        ) : <p>No users to display</p>
+        ) : (
+          <div>
+            <p> No users to display </p>
+            <div className='font-bold text-2xl text-red-600'> {error?.message} </div>
+          </div>
+        )
       }
     </article>
   );
