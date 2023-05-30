@@ -1,4 +1,4 @@
-import { BookmarkIcon, PaperAirplaneIcon, UserGroupIcon } from '@heroicons/react/24/outline';
+import { BookmarkIcon, ChatBubbleLeftRightIcon, PaperAirplaneIcon, UserGroupIcon } from '@heroicons/react/24/outline';
 import jwtDecode from 'jwt-decode';
 import React, { useEffect, useRef, useState } from 'react';
 import SockJS from 'sockjs-client';
@@ -150,7 +150,10 @@ const ChatRoom = () => {
 
   return (
     <div className='relative'>
-      <span className='text-xl font-bold'>Your chats</span>
+      <div className='flex flex-row justify-start items-center mb-3'>
+        <ChatBubbleLeftRightIcon className='w-8 h-8 mr-2' />
+        <span className='text-xl font-bold'>Your chats</span>
+      </div>
 
       {userData.connected &&
         <div className="chat-box">

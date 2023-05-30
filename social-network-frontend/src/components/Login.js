@@ -77,7 +77,7 @@ const Login = () => {
           Social Network
         </div>
 
-        <div className="w-full bg-white rounded-lg shadow-lg md:mt-3 sm:max-w-md xl:p-0">
+        <div className="form-container">
           <div className="p-5 space-y-3 md:space-y-4 sm:p-7">
             <h1 className="text-xl font-bold tracking-tight text-gray-900">Sign in to your account</h1>
             <section>
