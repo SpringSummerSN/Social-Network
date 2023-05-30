@@ -3,14 +3,17 @@ version: '3.8'
 services:
 
   db:
+    image: damiantomczyszyn/socialnetwork:database
     build:
+      
       context: .
       dockerfile: ./social-network/Dockerfile-db
       args:
-        - MYSQL_DATABASE=networkappp
+        - MYSQL_DATABASE=networkapp
         - MYSQL_ROOT_PASSWORD=root
     ports: 
       - "3306:3306"
+
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
@@ -45,3 +48,4 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=mongoadmin
       - MONGO_INITDB_ROOT_PASSWORD=bdung
     image: mongo
+

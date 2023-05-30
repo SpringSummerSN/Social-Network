@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Users = () => {
   const [users, setUsers] = useState();
   const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let isMounted = true;
@@ -14,20 +17,22 @@ const Users = () => {
         const response = await axiosPrivate.get('/users/recent', {
           signal: controller.signal
         });
-        console.log(response.data);
-        isMounted && setUsers(response.data);
+        const userEmails = response.data.map(user => user.email);
+        console.log(userEmails);
+        isMounted && setUsers(userEmails);
       } catch (err) {
         console.error(err);
+        navigate('/login', { state: { from: location }, replace: true });
       }
-    }
+    };
 
     getUsers();
 
     return () => {
       isMounted = false;
-      controller.abort();
-    }
-  }, [])
+      isMounted && controller.abort();
+    };
+  }, []);
 
   return (
     <article>
@@ -35,14 +40,12 @@ const Users = () => {
       {users?.length
         ? (
           <ul>
-            {users.map((user, i) => <li key={i}>{user?.email}</li>)}
+            {users.map((user, i) => <li key={i}>{user}</li>)}
           </ul>
         ) : <p>No users to display</p>
       }
-      {/* <button onClick={() => refresh()}>Refresh</button>
-      <br /> */}
     </article>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;

@@ -2,7 +2,7 @@ FROM node:18-alpine as builder
 
 WORKDIR /app
 
-COPY . .
+COPY ./social-network-frontend .
 
 RUN npm ci 
 
@@ -15,7 +15,7 @@ ENV NODE_ENV production
 COPY --from=builder /app/build /usr/share/nginx/html
 
 # Add your nginx.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY social-network-frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 # Start nginx

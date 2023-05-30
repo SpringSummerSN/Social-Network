@@ -1,5 +1,6 @@
 package spring.summer.socialnetwork.controllers;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) throws EmailExistsException {
+    public ResponseEntity<String> register(@RequestBody UserDTO userDTO) throws EmailExistsException, MessagingException {
         return ResponseEntity.ok(registerService.register(userDTO));
     }
 

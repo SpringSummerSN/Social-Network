@@ -2,10 +2,7 @@ package spring.summer.socialnetwork.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spring.summer.socialnetwork.dto.LoginDTO;
 import spring.summer.socialnetwork.dto.RefreshTokenDTO;
 import spring.summer.socialnetwork.dto.TokenDTO;
@@ -26,9 +23,9 @@ public class LoginController {
     public ResponseEntity<TokenDTO> login(@RequestBody LoginDTO LoginDTO){return loginService.authenticate(LoginDTO);}
 
 
-    @PostMapping("/refreshtoken")
-    public ResponseEntity<RefreshTokenDTO> refreshToken(@RequestBody RefreshTokenDTO tokenDTO){
-        return loginService.refreshTokenDTOResponseEntity(tokenDTO);
+    @GetMapping("/refreshtoken")
+    public ResponseEntity<RefreshTokenDTO> refreshToken(){
+        return loginService.refreshTokenDTOResponseEntity();
     }
 
 }

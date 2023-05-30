@@ -1,6 +1,15 @@
 package spring.summer.socialnetwork.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -40,10 +49,10 @@ public class User extends RepresentationModel<User> implements UserDetails {
     private String email;
 
     @NotEmpty(message = "Name cannot be empty")
-    @Size(min=2, max=150)
+    @Size(min = 2, max = 150)
     private String name;
     @NotEmpty(message = "Surname cannot be empty")
-    @Size(min=2, max=150)
+    @Size(min = 2, max = 150)
     private String surname;
 
     @Column(nullable = false, name = "password")
@@ -58,7 +67,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
 
 
     //////????
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "invitations_users",
             joinColumns = @JoinColumn(name = "user_1_id"),
@@ -67,7 +76,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
     private List<User> invitations;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "friends_users",
             joinColumns = @JoinColumn(name = "user_1_id"),
@@ -76,27 +85,23 @@ public class User extends RepresentationModel<User> implements UserDetails {
     private List<User> friends;
 
 
-
-
-
-    public void add_invitation(User user){
+    public void add_invitation(User user) {
         invitations.add(user);
     }
-
 
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> list = new ArrayList<>();
 
-         list.add(new GrantedAuthority() {
+        list.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
                 return String.valueOf(roles);
             }
         });
 
-      return list;
+        return list;
 
 
     }
@@ -105,8 +110,6 @@ public class User extends RepresentationModel<User> implements UserDetails {
     public String getUsername() {
         return this.email;
     }
-
-
 
 
     @Override
@@ -138,9 +141,6 @@ public class User extends RepresentationModel<User> implements UserDetails {
 
                 '}';
     }
-
-
-
 
 
 }

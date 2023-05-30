@@ -1,12 +1,16 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
+import useInput from '../hooks/useInput';
+import useLocalStorage from '../hooks/useLocalStorage';
+import useToggle from '../hooks/useToggle';
 
 const LOGIN_URL = '/login';
 
 const Login = () => {
   const { setAuth } = useAuth();
+  const [persist] = useLocalStorage('persist', false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -15,9 +19,12 @@ const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
 
-  const [email, setEmail] = useState('');
+  const [email, resetUser, userAttribs] = useInput('email', '');
   const [pwd, setPwd] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const [check, toggleCheck] = useToggle('persist', false);
+
+  localStorage.removeItem('token');
 
   useEffect(() => {
     userRef.current.focus();
@@ -42,23 +49,25 @@ const Login = () => {
       // const roles = response?.data?.roles;
 
       setAuth({ email, pwd, token });
+      localStorage.setItem('token', token);
       // setAuth({ email: email, password: pwd });
-      setEmail('');
+      // setEmail('');
+      resetUser();
       setPwd('');
       navigate(from, { replace: true });
     } catch (err) {
-      if (!err?.response) {
-        setErrMsg('No Server Response');
-      } else if (err.response?.status === 400) {
-        setErrMsg('Missing Email of Password');
-      } else if (err.response?.status === 401) {
-        setErrMsg('Unauthorized');
-      } else {
-        setErrMsg('Login Failed');
-      }
+      setErrMsg(err?.response?.data?.message);
       errRef.current.focus();
     }
   };
+
+  // const togglePersist = () => {
+  //   tog(prev => !prev);
+  // };
+
+  // useEffect(() => {
+  //   localStorage.setItem("persist", persist);
+  // }, [persist]);
 
   return (
     <section>
@@ -68,7 +77,7 @@ const Login = () => {
           Social Network
         </div>
 
-        <div className="w-full bg-white rounded-lg shadow-lg md:mt-3 sm:max-w-md xl:p-0">
+        <div className="form-container">
           <div className="p-5 space-y-3 md:space-y-4 sm:p-7">
             <h1 className="text-xl font-bold tracking-tight text-gray-900">Sign in to your account</h1>
             <section>
@@ -88,8 +97,7 @@ const Login = () => {
                     placeholder="email@mail.com"
                     ref={userRef}
                     autoComplete="email"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
+                    {...userAttribs}
                     required
                   />
                 </div>
@@ -110,6 +118,21 @@ const Login = () => {
                   />
                 </div>
 
+                <div className='flex items-center mb-4'>
+                  <input
+                    id="persist"
+                    type='checkbox'
+                    // value=""
+                    onChange={toggleCheck}
+                    checked={check}
+                    className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounde focus:ring-blue-500'
+                  />
+                  <label
+                    htmlFor='persist'
+                    className='ml-2 text-sm font-medium text-gray-900'>
+                    Trust this devise
+                  </label>
+                </div>
                 {/* Button */}
                 <button className="form-button-login">Sign In</button>
 

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+
+  frontend:
+    container_name: dockerized-react
+    image: damiantomczyszyn/socialnetwork:frontend
+    build:
+      context: .
+      dockerfile: ./social-network-frontend/Dockerfile
+    volumes:
+      - ./social-network-frontend/src:/app/src
+    ports:
+      - 3000:80
