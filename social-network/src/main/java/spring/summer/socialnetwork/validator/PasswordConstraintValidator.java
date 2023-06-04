@@ -7,6 +7,8 @@ import org.passay.dictionary.sort.ArraysSort;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.context.annotation.Bean;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,7 +18,7 @@ import java.util.stream.Collectors;
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
 
-
+    @Bean
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         PasswordValidator validator = new PasswordValidator(Arrays.asList(

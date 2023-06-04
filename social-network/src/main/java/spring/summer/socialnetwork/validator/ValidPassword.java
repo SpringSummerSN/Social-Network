@@ -3,17 +3,15 @@ package spring.summer.socialnetwork.validator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordConstraintValidator.class)
-@Target({ TYPE, FIELD, ANNOTATION_TYPE })
-@Retention(RUNTIME)
 public @interface ValidPassword {
 
     String message() default "Invalid Password";
