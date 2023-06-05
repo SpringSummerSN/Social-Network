@@ -14,10 +14,10 @@ const Users = () => {
 
     const getUsers = async () => {
       try {
-        const response = await axiosPrivate.get('/users/recent', {
+        const response = await axiosPrivate.get('/users', {
           signal: controller.signal
         });
-        const userEmails = response.data.map(user => user.email);
+        const userEmails = response.data._embedded.users.map(user => user.email);
         console.log(userEmails);
         isMounted && setUsers(userEmails);
       } catch (err) {
