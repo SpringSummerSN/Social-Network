@@ -19,8 +19,8 @@ public class MyCommandLineRunner implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
-        migration.initialize_db();
+    public void run(String... args) {
+        migration.initializeDb();
         mockup.mockData();
     }
 }
