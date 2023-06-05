@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.exceptions.EmailExistsException;
 import spring.summer.socialnetwork.services.RegisterService;
-import spring.summer.socialnetwork.validator.ValidPassword;
+
+import java.io.IOException;
 
 @RestController
 @Validated
@@ -27,7 +28,7 @@ public class RegisterController {
     }
 
     @PostMapping
-    public ResponseEntity<String> register(@RequestBody @Valid UserDTO userDTO) throws EmailExistsException, MessagingException {
+    public ResponseEntity<String> register(@RequestBody @Valid UserDTO userDTO) throws EmailExistsException, MessagingException, IOException {
         return ResponseEntity.ok(registerService.register(userDTO));
     }
 
