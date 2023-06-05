@@ -193,7 +193,7 @@ body {
   }
 
   .post-content{
-    @apply overflow-scroll;
+    @apply flex flex-col justify-start h-full overflow-scroll;
   }
 
   .post-actions{

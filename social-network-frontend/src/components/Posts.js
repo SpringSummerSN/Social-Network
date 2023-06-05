@@ -69,7 +69,9 @@ const Posts = () => {
                       src='https://www.telluride.com/site/assets/files/37120/mv.2200x1032.webp'
                       alt='mountain'
                     />
-                    {post.description}
+                    <span>
+                      {post.description}
+                    </span>
                   </div>
 
                   <div className='post-actions'>
