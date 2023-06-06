@@ -1,4 +1,5 @@
-import { ArrowDownIcon, ArrowUpIcon, ChatBubbleBottomCenterTextIcon, MapPinIcon, PencilSquareIcon } from '@heroicons/react/20/solid';
+import { ChatBubbleBottomCenterTextIcon, MapPinIcon, PencilSquareIcon } from '@heroicons/react/20/solid';
+import { HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
@@ -75,11 +76,11 @@ const Posts = () => {
                   </div>
 
                   <div className='post-actions'>
-                    <ArrowUpIcon type='button' className='w-8 h-8 cursor-pointer text-green-500' onClick={() => { alert("You upvoted this post!"); }} />
+                    <HandThumbUpIcon type='button' className='w-8 h-8 cursor-pointer text-green-500' onClick={() => { alert("You upvoted this post!"); }} />
 
                     <span className='text-lg font-bold'>{post.likes.length}</span>
 
-                    <ArrowDownIcon type='button' className='w-8 h-8 cursor-pointer text-indigo-500' onClick={() => { alert("You downvoted this post!"); }} />
+                    <HandThumbDownIcon type='button' className='w-8 h-8 cursor-pointer text-indigo-500' onClick={() => { alert("You downvoted this post!"); }} />
 
                     <input type="text" className="comment-input" placeholder="Enter your comment" />
 
