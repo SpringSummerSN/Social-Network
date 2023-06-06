@@ -30,5 +30,12 @@ public class ExceptionsHandler {
         return "email already exists";
     }
 
+    @ExceptionHandler(TooWeakPassword.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public String handle_to_weak_password(TooWeakPassword e){
+        System.out.println(e.getMessage());
+        return e.getMessage();
+    }
+
 
 }

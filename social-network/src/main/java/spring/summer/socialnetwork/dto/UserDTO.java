@@ -14,6 +14,6 @@ public class UserDTO {
     private String email;
     private String name;
     private String surname;
-    @ValidPassword
+    @ValidPassword(message = "Too weak password")
     private String password;
 }

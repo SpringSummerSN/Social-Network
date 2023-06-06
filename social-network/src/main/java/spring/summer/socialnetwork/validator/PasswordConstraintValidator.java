@@ -8,6 +8,8 @@ import org.passay.dictionary.sort.ArraysSort;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import spring.summer.socialnetwork.exceptions.TooWeakPassword;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -56,6 +58,8 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
         context.buildConstraintViolationWithTemplate(messageTemplate)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();
+        //throw new TooWeakPassword();
         return false;
+
     }
 }

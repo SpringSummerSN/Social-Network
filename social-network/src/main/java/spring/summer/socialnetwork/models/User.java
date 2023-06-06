@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import spring.summer.socialnetwork.exceptions.TooWeakPassword;
 import spring.summer.socialnetwork.validator.ValidPassword;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class User extends RepresentationModel<User> implements UserDetails {
     private String surname;
 
     @Column(nullable = false, name = "password")
-    @ValidPassword
+    @ValidPassword(message = "too weak password")
     private String password;
 
     @Column(columnDefinition = "boolean default false")
