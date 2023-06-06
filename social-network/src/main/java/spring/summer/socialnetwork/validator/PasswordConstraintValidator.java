@@ -1,5 +1,6 @@
 package spring.summer.socialnetwork.validator;
 
+import lombok.SneakyThrows;
 import org.passay.*;
 import org.passay.dictionary.WordListDictionary;
 import org.passay.dictionary.WordLists;
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class PasswordConstraintValidator implements ConstraintValidator<ValidPassword, String> {
 
 
+    @SneakyThrows
     @Bean
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
@@ -58,8 +60,8 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
         context.buildConstraintViolationWithTemplate(messageTemplate)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();
-        //throw new TooWeakPassword();
-        return false;
+        throw new TooWeakPassword();
+        //return false;
 
     }
 }

@@ -3,7 +3,9 @@ package spring.summer.socialnetwork.controllers;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,10 @@ public class RegisterController {
 
 
     @PostMapping
-    public ResponseEntity<String> register(@RequestBody @Valid UserDTO userDTO) throws EmailExistsException, MessagingException, IOException{
+    public ResponseEntity<String> register(@RequestBody @Valid UserDTO userDTO, Errors errors) throws EmailExistsException, MessagingException, IOException{
+        if (errors.hasErrors()) {
+            return new ResponseEntity(errors.getAllErrors(), HttpStatus.BAD_REQUEST);
+        }
         return ResponseEntity.ok(registerService.register(userDTO));
     }
 
