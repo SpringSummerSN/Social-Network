@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import spring.summer.socialnetwork.dto.UserDTO;
 import spring.summer.socialnetwork.exceptions.EmailExistsException;
+import spring.summer.socialnetwork.models.Role;
 import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.models.VerificationToken;
 import spring.summer.socialnetwork.repositories.UserRepository;
@@ -19,12 +20,10 @@ import java.nio.file.Paths;
 @Service
 public class RegisterService {
 
-    private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
-
-    private JavaMailSender javaMailSender;
-
-    private TokenService tokenService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender javaMailSender;
+    private final TokenService tokenService;
 
     public RegisterService(UserRepository userRepository, PasswordEncoder passwordEncoder, JavaMailSender javaMailSender, TokenService tokenService) {
         this.userRepository = userRepository;
@@ -32,7 +31,6 @@ public class RegisterService {
         this.javaMailSender = javaMailSender;
         this.tokenService = tokenService;
     }
-
 
     private void registerValidate(UserDTO userDTO) throws EmailExistsException {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
@@ -42,7 +40,6 @@ public class RegisterService {
 
     }
 
-
     public String register(UserDTO userDTO) throws EmailExistsException, MessagingException, IOException {
         registerValidate(userDTO);
         var user = User.builder()
@@ -50,8 +47,8 @@ public class RegisterService {
                 .password(passwordEncoder.encode(userDTO.getPassword()))
                 .surname(userDTO.getSurname())
                 .name(userDTO.getName())
+                .roles(Role.USER)
                 .build();
-
 
         userRepository.save(user);
 
