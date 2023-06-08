@@ -11,7 +11,7 @@ import spring.summer.socialnetwork.services.StorageService;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("api/v1/image")
+@RequestMapping("api/v2/image")
 public class ImageController {
 
     @Autowired

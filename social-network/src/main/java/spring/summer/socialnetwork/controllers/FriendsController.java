@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import spring.summer.socialnetwork.services.FriendsService;
 
 @RestController
-@RequestMapping("/api/v1/friends")
+@RequestMapping("/api/v2/friends")
 public class FriendsController {
    private FriendsService friendsService;
 

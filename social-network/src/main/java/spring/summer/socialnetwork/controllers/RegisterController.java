@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @RestController
 @Validated
-@RequestMapping("api/v1/register")
+@RequestMapping("api/v2/register")
 public class RegisterController {
 
     private RegisterService registerService;
