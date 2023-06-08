@@ -200,7 +200,7 @@ body {
   }
 
   .post-actions{
-    @apply flex flex-row justify-end items-center space-x-2 w-full pt-2 border-dotted border-t-4;
+    @apply flex flex-row justify-end items-center space-x-5 w-full pt-2 border-dotted border-t-4;
   }
 
   .comment-section{
@@ -232,7 +232,7 @@ body {
   }
 
   .comment-button{
-    @apply ml-1 h-8 w-8 cursor-pointer text-gray-800;
+    @apply h-8 w-8 cursor-pointer text-gray-800 hover:text-indigo-800;
   }
 
   .card-contatiner {
