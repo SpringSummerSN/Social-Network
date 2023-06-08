@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import spring.summer.socialnetwork.models.FileData;
 import spring.summer.socialnetwork.models.ImageData;
+import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.repositories.FileDataRepository;
 import spring.summer.socialnetwork.repositories.StorageRepository;
 import spring.summer.socialnetwork.repositories.UserRepository;
@@ -13,6 +14,7 @@ import spring.summer.socialnetwork.util.ImageUtils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.util.Optional;
 
 @Service
@@ -48,28 +50,8 @@ public class StorageService {
     }
 
 
-    public String uploadImageToFileSystem(MultipartFile file) throws IOException {// nie wykorzystywana funcjonalność
-        String filePath=FOLDER_PATH+file.getOriginalFilename();
 
-        FileData fileData=fileDataRepository.save(FileData.builder()
-                .name(file.getOriginalFilename())
-                .type(file.getContentType())
-                .filePath(filePath).build());
 
-        file.transferTo(new File(filePath));
-
-        if (fileData != null) {
-            return "file uploaded successfully : " + filePath;
-        }
-        return null;
-    }
-
-    public byte[] downloadImageFromFileSystem(String fileName) throws IOException {// nie wykorzystywana funcjonalność
-        Optional<FileData> fileData = fileDataRepository.findByName(fileName);
-        String filePath=fileData.get().getFilePath();
-        byte[] images = Files.readAllBytes(new File(filePath).toPath());
-        return images;
-    }
 
     public byte[] downloadImageForUser(Long userId) throws IOException {//jeszcze nie wykorzystywana funcjonalność - dla zdjęć profilowych w przyszłości
         var user = userRepository.getUserById(userId);
@@ -87,43 +69,27 @@ public class StorageService {
     }
 
 
-    public String uploadImageToFileSystemForUser(MultipartFile file, Long userId) throws IOException {//jeszcze nie wykorzystywana funcjonalność - dla zdjęć profilowych w przyszłości
-        var user = userRepository.getUserById(userId);
-        if(!user.isPresent())
-        {
-            throw new IOException();
-        }
-        String filePath=FOLDER_PATH+file.getOriginalFilename();
 
-        FileData fileData=fileDataRepository.save(FileData.builder()
-                .name(file.getOriginalFilename())
-                .type(file.getContentType())
-                .user(user.get())
-                .filePath(filePath).build());// pathem powinno być id lub generowana unikatowa wartość
+    public byte[] downloadProfileImage(Long userId) {
+        var image = userRepository.findById(userId).get().getImage();
+        return ImageUtils.decompressImage(image.getImageData());
+        //throw new NoSuchFileException("Image does not exist");
 
-        var test1 = fileDataRepository.findByUser(user.get());
-        if(!test1.isPresent()){
-            throw new IOException();
-        }
-        System.out.println("wyswietl typ: "+test1.get().getType());
-        System.out.println("wyswietl typ: "+test1.get().getName());
-
-        var myStr = test1.get().getName();
-        var nStr = myStr.substring(myStr.indexOf("."));
-        //System.out.println("rozszerzenie: "+nStr);
-
-
-        test1.get().setFilePath(String.valueOf(test1.get().getId())+nStr);
-        var test2 = fileDataRepository.save(test1.get());
-
-        filePath=FOLDER_PATH+test2.getFilePath();
-
-        file.transferTo(new File(filePath));
-
-        if (fileData != null) {
-            return "file uploaded successfully : " + filePath;
-        }
-        return null;
     }
 
+    public String uploadProfileImage(MultipartFile file, Long userId) throws IOException {
+        ImageData imageData = repository.save(ImageData.builder()
+                .name(file.getOriginalFilename())
+                .type(file.getContentType())
+                .imageData(ImageUtils.compressImage(file.getBytes())).build());
+        var user = userRepository.getUserById(userId);
+        if (imageData != null && user.isPresent()) {
+            User userG = user.get();
+            userG.setImage(imageData);
+            userRepository.save(userG);
+            return "file uploaded successfully : " + file.getOriginalFilename();
+        }
+        System.out.println("upload fail");
+        return null;
+    }
 }

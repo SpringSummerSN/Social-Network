@@ -17,7 +17,7 @@ public class ImageController {
     @Autowired
     private StorageService service;
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<?> uploadImage(@RequestParam("image") MultipartFile file) throws IOException {
        // System.out.println("rozmiar pliku: "+file.getSize());
 
@@ -32,42 +32,20 @@ public class ImageController {
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
     }
-/*    @PostMapping("/fileSystem")
-    public ResponseEntity<?> uploadImageToFIleSystem(@RequestParam("image") MultipartFile file) throws IOException {
-        String uploadImage = service.uploadImageToFileSystem(file);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
-    }*/
 
-/*    @GetMapping("/fileSystem/{fileName}")
-    public ResponseEntity<?> downloadImageFromFileSystem(@PathVariable String fileName) throws IOException {
-        byte[] imageData = service.downloadImageFromFileSystem(fileName);
+    @GetMapping("profile/{userId}")
+    public ResponseEntity<?> downloadProfileImage(@PathVariable Long userId) {
+        byte[] imageData = service.downloadProfileImage(userId);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
-
-    }*/
-
-
-/*    @PostMapping("/fileSystem/userProfile")
-    public ResponseEntity<?> uploadImageForUser(@RequestParam("image") MultipartFile file, @RequestParam("userid") Long userId) throws IOException {
-
-        String uploadImage = service.uploadImageToFileSystemForUser(file, userId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(uploadImage);
-    }*/
-
-/*
-    @GetMapping("/fileSystem/userProfile/{userId}")
-    public ResponseEntity<?> downloadImageForUser(@PathVariable Long userId) throws IOException {
-        byte[] imageData = service.downloadImageForUser(userId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .contentType(MediaType.valueOf("image/png"))
-                .body(imageData);
-
     }
-*/
-
+    @PostMapping("profile/{userId}")
+    public ResponseEntity<?> uploadProfileImage(@RequestParam("image") MultipartFile file, @PathVariable Long userId) throws IOException {
+        String uploadImage = service.uploadProfileImage(file,userId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(uploadImage);
+    }
 
 
 }
