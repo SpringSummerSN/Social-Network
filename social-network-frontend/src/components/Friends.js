@@ -1,14 +1,22 @@
 import { ChatBubbleBottomCenterTextIcon, EllipsisHorizontalCircleIcon, EllipsisVerticalIcon, UserMinusIcon, UsersIcon } from '@heroicons/react/24/outline';
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const Friends = () => {
-
+  const [isFetching, setIsFetching] = useState(true);
   const [friends, setFriends] = useState();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    setTimeout(function () {
+      setIsFetching(false);
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -35,6 +43,14 @@ const Friends = () => {
       isMounted && controller.abort();
     };
   }, []);
+
+  if (isFetching) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center" }}>
+        <CircularProgress color='success' />
+      </Box>
+    );
+  }
 
   return (
     <div>
