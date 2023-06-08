@@ -232,7 +232,7 @@ body {
   }
 
   .comment-button{
-    @apply h-8 w-8 cursor-pointer text-gray-800 hover:text-indigo-800;
+    @apply h-8 w-8 cursor-pointer text-gray-800 hover:text-indigo-700;
   }
 
   .card-contatiner {
@@ -244,7 +244,7 @@ body {
   }
 
   .card{
-    @apply flex flex-[1_1_auto] flex-col p-2 my-2 mx-1 items-center bg-white rounded-lg shadow-lg;
+    @apply flex flex-[1_1_auto] flex-col p-2 my-2 mx-1 items-center bg-white rounded-lg shadow-lg hover:shadow-gray-400;
   }
 
   .friend-info{

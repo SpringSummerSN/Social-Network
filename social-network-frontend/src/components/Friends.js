@@ -24,10 +24,10 @@ const Friends = () => {
 
     const getFriends = async () => {
       try {
-        const response = await axiosPrivate.get('/users', {
+        const response = await axiosPrivate.get('/friends', {
           signal: controller.signal
         });
-        const allFriends = response.data._embedded.users;
+        const allFriends = response.data;
         console.log(allFriends);
         isMounted && setFriends(allFriends);
       } catch (err) {
@@ -78,9 +78,9 @@ const Friends = () => {
                     </span>
                   </div>
                   <div className='friend-actions'>
-                    <ChatBubbleBottomCenterTextIcon className='w-8 h-8 cursor-pointer' />
-                    <UserMinusIcon className='w-8 h-8 cursor-pointer' />
-                    <EllipsisHorizontalCircleIcon className='w-8 h-8 cursor-pointer' />
+                    <ChatBubbleBottomCenterTextIcon className='w-8 h-8 cursor-pointer hover:text-indigo-700' />
+                    <UserMinusIcon className='w-8 h-8 cursor-pointer hover:text-indigo-700' />
+                    <EllipsisHorizontalCircleIcon className='w-8 h-8 cursor-pointer hover:text-indigo-700' />
                   </div>
                 </div>
               </div>)}
