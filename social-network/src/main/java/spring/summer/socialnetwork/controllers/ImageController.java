@@ -33,16 +33,17 @@ public class ImageController {
                 .body(imageData);
     }
 
-    @GetMapping("profile/{userId}")
-    public ResponseEntity<?> downloadProfileImage(@PathVariable Long userId) {
-        byte[] imageData = service.downloadProfileImage(userId);
+    @GetMapping("profile")
+    public ResponseEntity<?> downloadProfileImage() {
+
+        byte[] imageData = service.downloadProfileImage();
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("image/png"))
                 .body(imageData);
     }
-    @PostMapping("profile/{userId}")
-    public ResponseEntity<?> uploadProfileImage(@RequestParam("image") MultipartFile file, @PathVariable Long userId) throws IOException {
-        String uploadImage = service.uploadProfileImage(file,userId);
+    @PostMapping("profile")
+    public ResponseEntity<?> uploadProfileImage(@RequestParam("image") MultipartFile file) throws IOException {
+        String uploadImage = service.uploadProfileImage(file);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(uploadImage);
     }

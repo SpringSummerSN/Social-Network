@@ -1,6 +1,8 @@
 package spring.summer.socialnetwork.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import spring.summer.socialnetwork.models.FileData;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.rmi.NoSuchObjectException;
 import java.util.Optional;
 
 @Service
@@ -70,14 +73,29 @@ public class StorageService {
 
 
 
-    public byte[] downloadProfileImage(Long userId) {
+    public byte[] downloadProfileImage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!userRepository.findByEmail(auth.getName()).isPresent())
+        {
+            System.out.println("Brak usera");
+        }
+
+        Long userId = userRepository.findByEmail(auth.getName()).get().getId();
         var image = userRepository.findById(userId).get().getImage();
+        auth = SecurityContextHolder.getContext().getAuthentication();
         return ImageUtils.decompressImage(image.getImageData());
         //throw new NoSuchFileException("Image does not exist");
 
     }
 
-    public String uploadProfileImage(MultipartFile file, Long userId) throws IOException {
+    public String uploadProfileImage(MultipartFile file) throws IOException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if(!userRepository.findByEmail(auth.getName()).isPresent())
+        {
+            System.out.println("Brak usera");
+        }
+
+        Long userId = userRepository.findByEmail(auth.getName()).get().getId();
         ImageData imageData = repository.save(ImageData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
