@@ -27,7 +27,7 @@ public class ImageUtils {
     }
 
 
-//240 KB (bajtów: 245,760)
+
     //
     public static byte[] decompressImage(byte[] data) {
         Inflater inflater = new Inflater();
