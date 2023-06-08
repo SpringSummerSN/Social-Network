@@ -2,14 +2,19 @@ import { ChatBubbleBottomCenterTextIcon, MapPinIcon, PencilSquareIcon } from '@h
 import { HandThumbDownIcon, HandThumbUpIcon } from '@heroicons/react/24/outline';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import jwtDecode from 'jwt-decode';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from '../api/axios';
+import useAuth from '../hooks/useAuth';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 
 const postsURL = '/posts';
 
 const Posts = () => {
+  const { auth } = useAuth();
+  const decoded = jwtDecode(auth?.token);
+
   const [isFetching, setIsFetching] = useState(true);
   const [posts, setPosts] = useState();
   const [refreshLikes, setRefreshLikes] = useState(true);
@@ -28,6 +33,8 @@ const Posts = () => {
     let isMounted = true;
     const controller = new AbortController();
 
+    console.log(auth.email);
+
     const getPosts = async () => {
       try {
         const response = await axiosPrivate.get(postsURL, {
@@ -35,6 +42,7 @@ const Posts = () => {
         });
         const allPosts = response.data;
         console.log(allPosts);
+
         isMounted && setPosts(allPosts);
       } catch (err) {
         console.error(err);
@@ -67,6 +75,10 @@ const Posts = () => {
     } catch (err) {
       console.error(err);
     }
+  }
+
+  function iSLiked(post) {
+    return post.likes.some(like => like['email'] === decoded.sub);
   }
 
   if (isFetching) {
@@ -116,11 +128,14 @@ const Posts = () => {
                   </div>
 
                   <div className='post-actions'>
-                    <HandThumbUpIcon type='button' className='w-8 h-8 cursor-pointer text-green-500' onClick={() => { likePost(post.id); }} />
+                    {iSLiked(post) ? (
+                      <HandThumbDownIcon type='button' className='w-8 h-8 cursor-pointer hover:text-red-500' onClick={() => { dislikePost(post.id); }} />
+                    ) : (
+                      <HandThumbUpIcon type='button' className='w-8 h-8 cursor-pointer hover:text-green-500' onClick={() => { likePost(post.id); }} />
+
+                    )}
 
                     <span className='text-lg font-bold'>{post.likes.length}</span>
-
-                    <HandThumbDownIcon type='button' className='w-8 h-8 cursor-pointer text-indigo-500' onClick={() => { dislikePost(post.id); }} />
 
                     <input type="text" className="comment-input" placeholder="Enter your comment" />
 
