@@ -34,7 +34,7 @@ public class FriendsController {
         return ResponseEntity.ok(friends);
     }
 
-    @GetMapping()
+    @PostMapping()
     public void addToFriends(@RequestParam Long friendId) {
         friendsService.addUserToFriends(friendId);
 
