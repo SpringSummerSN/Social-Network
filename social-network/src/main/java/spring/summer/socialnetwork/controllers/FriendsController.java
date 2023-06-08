@@ -1,6 +1,8 @@
 package spring.summer.socialnetwork.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +15,7 @@ import spring.summer.socialnetwork.services.FriendsService;
 @RequestMapping("/api/v1/friends")
 public class FriendsController {
    private FriendsService friendsService;
+
 
    @Autowired
     public FriendsController(FriendsService friendsService) {
