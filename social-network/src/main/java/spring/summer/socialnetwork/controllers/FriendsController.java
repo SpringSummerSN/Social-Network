@@ -1,15 +1,17 @@
 package spring.summer.socialnetwork.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import spring.summer.socialnetwork.models.User;
 import spring.summer.socialnetwork.services.FriendsService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/friends")
@@ -25,6 +27,17 @@ public class FriendsController {
     @PostMapping("/{id}")
     public void test_kafka(@PathVariable Long id) throws JsonProcessingException {
         friendsService.send_request(id);
+    }
+    @GetMapping()
+    public ResponseEntity<List<User>> getFriends() {
+        List<User> friends = friendsService.getUserFriends();
+        return ResponseEntity.ok(friends);
+    }
+
+    @GetMapping()
+    public void addToFriends(@RequestParam Long friendId) {
+        friendsService.addUserToFriends(friendId);
+
     }
 
 }

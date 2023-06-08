@@ -75,13 +75,8 @@ public class StorageService {
 
     public byte[] downloadProfileImage() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(!userRepository.findByEmail(auth.getName()).isPresent())
-        {
-            System.out.println("Brak usera");
-        }
-
-        Long userId = userRepository.findByEmail(auth.getName()).get().getId();
-        var image = userRepository.findById(userId).get().getImage();
+        User user = userRepository.findByEmail(auth.getName()).orElse(null);
+        var image = userRepository.findById(user.getId()).get().getImage();
         auth = SecurityContextHolder.getContext().getAuthentication();
         return ImageUtils.decompressImage(image.getImageData());
         //throw new NoSuchFileException("Image does not exist");
@@ -90,21 +85,17 @@ public class StorageService {
 
     public String uploadProfileImage(MultipartFile file) throws IOException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(!userRepository.findByEmail(auth.getName()).isPresent())
-        {
-            System.out.println("Brak usera");
-        }
+        User user = userRepository.findByEmail(auth.getName()).orElse(null);
 
-        Long userId = userRepository.findByEmail(auth.getName()).get().getId();
         ImageData imageData = repository.save(ImageData.builder()
                 .name(file.getOriginalFilename())
                 .type(file.getContentType())
                 .imageData(ImageUtils.compressImage(file.getBytes())).build());
-        var user = userRepository.getUserById(userId);
-        if (imageData != null && user.isPresent()) {
-            User userG = user.get();
-            userG.setImage(imageData);
-            userRepository.save(userG);
+
+        if (imageData != null ) {
+
+            user.setImage(imageData);
+            userRepository.save(user);
             return "file uploaded successfully : " + file.getOriginalFilename();
         }
         System.out.println("upload fail");

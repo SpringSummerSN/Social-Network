@@ -77,6 +77,10 @@ public class User extends RepresentationModel<User> implements UserDetails {
     )
     private List<User> friends;
 
+    public void addToFriends(User user){
+        friends.add(user);
+    }
+
 
     public void add_invitation(User user) {
         invitations.add(user);
