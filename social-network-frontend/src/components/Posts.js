@@ -4,14 +4,19 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from '../api/axios';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+
+const postsURL = '/posts';
 
 const Posts = () => {
   const [isFetching, setIsFetching] = useState(true);
   const [posts, setPosts] = useState();
+  const [refreshLikes, setRefreshLikes] = useState(true);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+
 
   useEffect(() => {
     setTimeout(function () {
@@ -25,7 +30,7 @@ const Posts = () => {
 
     const getPosts = async () => {
       try {
-        const response = await axiosPrivate.get('/posts', {
+        const response = await axiosPrivate.get(postsURL, {
           signal: controller.signal
         });
         const allPosts = response.data;
@@ -38,12 +43,31 @@ const Posts = () => {
     };
 
     getPosts();
+    setRefreshLikes(false);
 
     return () => {
       isMounted = false;
       isMounted && controller.abort();
     };
-  }, []);
+  }, [refreshLikes]);
+
+  async function likePost(postId) {
+    try {
+      await axiosPrivate.put(`${postsURL}/${postId}/like`);
+      setRefreshLikes(true);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  async function dislikePost(postId) {
+    try {
+      await axiosPrivate.put(`${postsURL}/${postId}/unlike`);
+      setRefreshLikes(true);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   if (isFetching) {
     return (
@@ -92,11 +116,11 @@ const Posts = () => {
                   </div>
 
                   <div className='post-actions'>
-                    <HandThumbUpIcon type='button' className='w-8 h-8 cursor-pointer text-green-500' onClick={() => { alert("You upvoted this post!"); }} />
+                    <HandThumbUpIcon type='button' className='w-8 h-8 cursor-pointer text-green-500' onClick={() => { likePost(post.id); }} />
 
                     <span className='text-lg font-bold'>{post.likes.length}</span>
 
-                    <HandThumbDownIcon type='button' className='w-8 h-8 cursor-pointer text-indigo-500' onClick={() => { alert("You downvoted this post!"); }} />
+                    <HandThumbDownIcon type='button' className='w-8 h-8 cursor-pointer text-indigo-500' onClick={() => { dislikePost(post.id); }} />
 
                     <input type="text" className="comment-input" placeholder="Enter your comment" />
 
