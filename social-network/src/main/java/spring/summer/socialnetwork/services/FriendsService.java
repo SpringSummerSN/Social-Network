@@ -54,7 +54,10 @@ public class FriendsService {
         User friend = userRepository.findById(friendId).orElse(null);
         if(user!=null && friend!=null){
             user.addToFriends(friend);
-            friend.addToFriends(user);
+            //friend.addToFriends(user);
+            userRepository.save(user);
+            //userRepository.save(friend);
+
             return;
         }
         System.out.println("brak usera o podanym id");
