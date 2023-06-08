@@ -63,4 +63,20 @@ public class FriendsService {
         System.out.println("brak usera o podanym id");
 
     }
+
+    public void removeUserToFriends(Long friendId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(auth.getName()).orElse(null);
+        User friend = userRepository.findById(friendId).orElse(null);
+        if(user!=null && friend!=null){
+            user.removeFromFriends(friend);
+            //friend.addToFriends(user);
+            userRepository.save(user);
+            //userRepository.save(friend);
+
+            return;
+        }
+        System.out.println("brak usera o podanym id");
+
+    }
 }

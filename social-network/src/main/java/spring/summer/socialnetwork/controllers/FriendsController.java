@@ -37,7 +37,10 @@ public class FriendsController {
     @PostMapping("friend/{friendId}")
     public void addToFriends(@PathVariable Long friendId) {
         friendsService.addUserToFriends(friendId);
-
+    }
+    @DeleteMapping ("friend/{friendId}")
+    public void removeToFriends(@PathVariable Long friendId) {
+        friendsService.removeUserToFriends(friendId);
     }
 
 }

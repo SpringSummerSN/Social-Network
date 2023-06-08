@@ -140,5 +140,8 @@ public class User extends RepresentationModel<User> implements UserDetails {
     }
 
 
+    public void removeFromFriends(User friend) {
+        friends.remove(friend);
+    }
 }
 
