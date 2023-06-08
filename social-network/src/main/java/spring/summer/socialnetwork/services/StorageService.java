@@ -26,7 +26,7 @@ public class StorageService {
     @Autowired
     private UserRepository userRepository;
 
-    private final String FOLDER_PATH="C:\\Users\\damian\\Pictures\\springimages\\";
+    private final String FOLDER_PATH=System.getProperty("user.dir\\");
 
     public String uploadImage(MultipartFile file) throws IOException {
         ImageData imageData = repository.save(ImageData.builder()
@@ -48,7 +48,7 @@ public class StorageService {
     }
 
 
-    public String uploadImageToFileSystem(MultipartFile file) throws IOException {
+    public String uploadImageToFileSystem(MultipartFile file) throws IOException {// nie wykorzystywana funcjonalność
         String filePath=FOLDER_PATH+file.getOriginalFilename();
 
         FileData fileData=fileDataRepository.save(FileData.builder()
@@ -64,14 +64,14 @@ public class StorageService {
         return null;
     }
 
-    public byte[] downloadImageFromFileSystem(String fileName) throws IOException {
+    public byte[] downloadImageFromFileSystem(String fileName) throws IOException {// nie wykorzystywana funcjonalność
         Optional<FileData> fileData = fileDataRepository.findByName(fileName);
         String filePath=fileData.get().getFilePath();
         byte[] images = Files.readAllBytes(new File(filePath).toPath());
         return images;
     }
 
-    public byte[] downloadImageForUser(Long userId) throws IOException {
+    public byte[] downloadImageForUser(Long userId) throws IOException {//jeszcze nie wykorzystywana funcjonalność - dla zdjęć profilowych w przyszłości
         var user = userRepository.getUserById(userId);
         if(!user.isPresent())
         {
@@ -87,7 +87,7 @@ public class StorageService {
     }
 
 
-    public String uploadImageToFileSystemForUser(MultipartFile file, Long userId) throws IOException {
+    public String uploadImageToFileSystemForUser(MultipartFile file, Long userId) throws IOException {//jeszcze nie wykorzystywana funcjonalność - dla zdjęć profilowych w przyszłości
         var user = userRepository.getUserById(userId);
         if(!user.isPresent())
         {

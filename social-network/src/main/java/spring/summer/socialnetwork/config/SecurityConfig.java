@@ -33,10 +33,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/v1/login", "/api/v1/register","/swagger/**","/swagger-ui/**", "/api-docs/**")
                 .permitAll()
                 .requestMatchers("/**")
-
                 .authenticated()
-//                .requestMatchers("/api/v1/**")
-//                .authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(corsFilter, JwtFilter.class);
