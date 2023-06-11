@@ -1,0 +1,7 @@
+Aspiracja na ocene 5.
+
+1. Spełnia wymagania na ocenę 4.
+2. Osiągnięty hateoas
+3. Swagger skonfigurowany w aplikacji
+4. Wykorzystanie JWT
+5. Rozbudowany front-end w Reakcie
