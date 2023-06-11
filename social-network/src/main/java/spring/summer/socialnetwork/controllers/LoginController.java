@@ -9,7 +9,7 @@ import spring.summer.socialnetwork.dto.TokenDTO;
 import spring.summer.socialnetwork.services.LoginService;
 
 @RestController
-@RequestMapping("api/v1")
+@RequestMapping("api/v2")
 public class LoginController {
 
     private LoginService loginService;
