@@ -5,3 +5,5 @@ Aspiracja na ocene 5.
 3. Swagger skonfigurowany w aplikacji
 4. Wykorzystanie JWT
 5. Rozbudowany front-end w Reakcie
+6. Dokeryzacja aplikacji
+
